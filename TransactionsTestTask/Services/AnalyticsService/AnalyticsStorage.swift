@@ -31,11 +31,9 @@ final class InMemoryAnalyticsStorage: AnalyticsStorageProtocol {
     // MARK: - AnalyticsStorageProtocol
     func saveEvent(_ event: AnalyticsEvent) {
         queue.async(flags: .barrier) { [weak self] in
-            guard let self = self else { return }
+            guard let self else { return }
             
             self.events.append(event)
-            
-            // Keep only the latest events if we exceed the limit
             if self.events.count > self.maxEventsCount {
                 let excessCount = self.events.count - self.maxEventsCount
                 self.events.removeFirst(excessCount)
@@ -44,9 +42,8 @@ final class InMemoryAnalyticsStorage: AnalyticsStorageProtocol {
     }
     
     func getEvents() -> [AnalyticsEvent] {
-        return queue.sync {
-            // Sort by date (newest first)
-            return events.sorted { $0.date > $1.date }
+        queue.sync {
+            events.sorted { $0.date > $1.date }
         }
     }
     
@@ -57,8 +54,8 @@ final class InMemoryAnalyticsStorage: AnalyticsStorageProtocol {
     }
     
     func getEventCount() -> Int {
-        return queue.sync {
-            return events.count
+        queue.sync {
+            events.count
         }
     }
 }

@@ -10,19 +10,23 @@ import UIKit
 final class MainScreenPresenter {
     private let model: MainScreenModelProtocol
     private let router: Router
-    private let bitcoinRateService: BitcoinRateService
+    private var bitcoinRateServiceRepository: BitcoinRateServiceRepositoryProtocol
     private weak var controller: MainScreenViewControllerProtocol?
     
     struct Dependencies {
         let model: MainScreenModelProtocol
         let router: Router
-        let bitcoinRateService: BitcoinRateService
+        let bitcoinRateServiceRepository: BitcoinRateServiceRepositoryProtocol
     }
     
     init(dependencies: Dependencies) {
         self.model = dependencies.model
         self.router = dependencies.router
-        self.bitcoinRateService = dependencies.bitcoinRateService
+        self.bitcoinRateServiceRepository = dependencies.bitcoinRateServiceRepository
+    }
+    
+    deinit {
+        bitcoinRateServiceRepository.stopPeriodicUpdates()
     }
 }
 
@@ -32,34 +36,81 @@ private extension MainScreenPresenter {
         self.router.showAddTransactionScreen()
     }
     
-    private func onTransactionSelected(at index: Int) {
-        print("Transaction selected at index: \(index)")
-        // Handle transaction selection if needed
-    }
-    
     private func updateView() {
-        let transactions = self.model.getTransactions()
-        self.controller?.updateTransactions(transactions)
+        let sections = self.model.getTransactionSections()
+        self.controller?.updateTransactionSections(sections)
+        loadCurrentBalance()
     }
     
     private func loadBitcoinRate() {
         controller?.showBitcoinLoading()
-        
-        bitcoinRateService.getBitcoinRate { [weak self] result in
-            switch result {
-            case .success:
-                // Rate will be updated via onRateUpdate callback
-                break
-            case .failure(let error):
-                print("Failed to load Bitcoin rate: \(error)")
-                self?.controller?.showBitcoinError()
-            }
+        bitcoinRateServiceRepository.startPeriodicUpdates()
+    }
+    
+    private func loadLatestRateFromStorage() {
+        if let latestRate = model.getLatestRate() {
+            controller?.updateBitcoinRateWithDate(latestRate.rate, date: latestRate.date)
+        }
+    }
+    
+    private func loadCurrentBalance() {
+        if let currentBalance = model.getCurrentBalance() {
+            controller?.updateBalance(currentBalance)
+        } else {
+            controller?.updateBalance(0.0)
         }
     }
     
     private func setupBitcoinRateUpdates() {
-        bitcoinRateService.onRateUpdate = { [weak self] rate in
+        bitcoinRateServiceRepository.onRateUpdate = { [weak self] rate in
             self?.controller?.updateBitcoinRate(rate)
+        }
+    }
+    
+    private func showTopUpBalanceAlert() {
+        let alert = UIAlertController(title: "Top Up Balance", message: "Enter the amount of bitcoins to add to your balance", preferredStyle: .alert)
+        
+        alert.addTextField { textField in
+            textField.placeholder = "Amount (BTC)"
+            textField.keyboardType = .decimalPad
+        }
+        
+        let addAction = UIAlertAction(title: "Add", style: .default) { [weak self] _ in
+            guard let textField = alert.textFields?.first,
+                  let text = textField.text,
+                  !text.isEmpty,
+                  let amount = Double(text),
+                  amount > 0 else {
+                return
+            }
+            
+            self?.model.topUpBalance(amount: amount)
+            
+            let topUpTransaction = Transaction(
+                id: UUID(),
+                category: .enrollment,
+                amount: amount,
+                date: Date()
+            )
+            
+            self?.model.addTransaction(topUpTransaction)
+            self?.loadCurrentBalance()
+            self?.updateView()
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        alert.addAction(addAction)
+        alert.addAction(cancelAction)
+        
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let window = windowScene.windows.first,
+           let rootViewController = window.rootViewController {
+            var topController = rootViewController
+            while let presentedController = topController.presentedViewController {
+                topController = presentedController
+            }
+            topController.present(alert, animated: true)
         }
     }
 }
@@ -71,7 +122,9 @@ extension MainScreenPresenter: MainScreenPresenterProtocol {
     }
     
     func viewDidLoad() {
-        self.updateView()
+        self.loadFirstPage()
+        self.loadLatestRateFromStorage()
+        self.loadCurrentBalance()
         self.setupBitcoinRateUpdates()
         self.loadBitcoinRate()
     }
@@ -80,11 +133,52 @@ extension MainScreenPresenter: MainScreenPresenterProtocol {
         self.onAddTransactionTapped()
     }
     
-    func transactionSelected(at index: Int) {
-        self.onTransactionSelected(at: index)
+    func topUpBalanceTapped() {
+        showTopUpBalanceAlert()
     }
     
-    func getTransactions() -> [Transaction] {
-        model.getTransactions()
+    func getTransactionSections() -> [TransactionSection] {
+        model.getTransactionSections()
+    }
+    
+    func loadNextPage() {
+        if model.loadNextPage() {
+            loadCurrentBalance()
+            updateView()
+        }
+    }
+    
+    func refreshTransactions() {
+        model.refreshTransactions()
+        loadCurrentBalance()
+        updateView()
+    }
+    
+    func getPaginationInfo() -> PaginationInfo {
+        model.getPaginationInfo()
+    }
+    
+    func getLatestRate() -> Rate? {
+        model.getLatestRate()
+    }
+    
+    func getModel() -> MainScreenModelProtocol {
+        model
+    }
+    
+    func getCurrentBalance() -> CurrentBalance? {
+        model.getCurrentBalance()
+    }
+    
+    func viewWillAppear() {
+        loadCurrentBalance()
+        updateView()
+    }
+    
+    // MARK: - Private Methods
+    private func loadFirstPage() {
+        model.loadFirstPage()
+        loadCurrentBalance()
+        updateView()
     }
 }

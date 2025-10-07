@@ -16,7 +16,7 @@
 		0BB16B132E941CAC0039C126 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B122E941CAC0039C126 /* TableView.swift */; };
 		0BB16B152E941DBB0039C126 /* ReusableViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B142E941DBB0039C126 /* ReusableViewProtocol.swift */; };
 		0BB16B172E941E080039C126 /* ConfigurableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B162E941E080039C126 /* ConfigurableCell.swift */; };
-		0BB16B1C2E9420210039C126 /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B1B2E9420210039C126 /* CategoryCell.swift */; };
+		0BB16B1C2E9420210039C126 /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B1B2E9420210039C126 /* TransactionCell.swift */; };
 		0BB16B1E2E9420B90039C126 /* UIView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B1D2E9420B90039C126 /* UIView.swift */; };
 		0BB16B202E9422060039C126 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B1F2E9422060039C126 /* Transaction.swift */; };
 		0BB16B232E942B430039C126 /* AddTransactionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B222E942B430039C126 /* AddTransactionViewController.swift */; };
@@ -30,11 +30,18 @@
 		0BB16B442E943C6B0039C126 /* MainScreenAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B422E943C6B0039C126 /* MainScreenAssembly.swift */; };
 		0BB16B472E943C990039C126 /* AddTransactionScreenAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B452E943C990039C126 /* AddTransactionScreenAssembly.swift */; };
 		0BB16B752E945A7A0039C126 /* AnalyticsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B722E945A7A0039C126 /* AnalyticsStorage.swift */; };
-		0BB16B762E945A7A0039C126 /* AnalyticsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B712E945A7A0039C126 /* AnalyticsManager.swift */; };
 		0BB16BE02E9561760039C126 /* BitcoinEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BD72E9561760039C126 /* BitcoinEndpoints.swift */; };
 		0BB16BE12E9561760039C126 /* BitcoinRateModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BD92E9561760039C126 /* BitcoinRateModels.swift */; };
 		0BB16BE22E9561760039C126 /* NetworkProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BDB2E9561760039C126 /* NetworkProtocols.swift */; };
 		0BB16BE32E9561760039C126 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BDD2E9561760039C126 /* NetworkService.swift */; };
+		0BB16BE52E9562BD0039C126 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BE42E9562BD0039C126 /* CoreDataManager.swift */; };
+		0BB16BE72E95645A0039C126 /* TransactionSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BE62E95645A0039C126 /* TransactionSection.swift */; };
+		0BB16BE92E956A1C0039C126 /* Rate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BE82E956A1C0039C126 /* Rate.swift */; };
+		0BB16BED2E956FCA0039C126 /* PaginationInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BEC2E956FCA0039C126 /* PaginationInfo.swift */; };
+		0BB16BEF2E9586BE0039C126 /* CurrentBalance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BEE2E9586BE0039C126 /* CurrentBalance.swift */; };
+		0BB16BF12E9591960039C126 /* BitcoinRateServiceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BF02E9591960039C126 /* BitcoinRateServiceRepository.swift */; };
+		0BB16BF32E9591CF0039C126 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BF22E9591CF0039C126 /* NetworkMonitor.swift */; };
+		0BB16BF52E95A1340039C126 /* AnalyticsEventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BF42E95A1340039C126 /* AnalyticsEventProtocol.swift */; };
 		0D1540612D22EF5D00D6D63F /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1540602D22EF5D00D6D63F /* AnalyticsEvent.swift */; };
 		0DF1D1402D22DC51001626E7 /* ServicesAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF1D13F2D22DC4B001626E7 /* ServicesAssembler.swift */; };
 		0DF1D1432D22DCD8001626E7 /* PerformOnce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF1D1422D22DCD2001626E7 /* PerformOnce.swift */; };
@@ -75,7 +82,7 @@
 		0BB16B122E941CAC0039C126 /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
 		0BB16B142E941DBB0039C126 /* ReusableViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableViewProtocol.swift; sourceTree = "<group>"; };
 		0BB16B162E941E080039C126 /* ConfigurableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigurableCell.swift; sourceTree = "<group>"; };
-		0BB16B1B2E9420210039C126 /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
+		0BB16B1B2E9420210039C126 /* TransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
 		0BB16B1D2E9420B90039C126 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		0BB16B1F2E9422060039C126 /* Transaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transaction.swift; sourceTree = "<group>"; };
 		0BB16B222E942B430039C126 /* AddTransactionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionViewController.swift; sourceTree = "<group>"; };
@@ -88,12 +95,19 @@
 		0BB16B3B2E9437E20039C126 /* MainScreenProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenProtocols.swift; sourceTree = "<group>"; };
 		0BB16B422E943C6B0039C126 /* MainScreenAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenAssembly.swift; sourceTree = "<group>"; };
 		0BB16B452E943C990039C126 /* AddTransactionScreenAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionScreenAssembly.swift; sourceTree = "<group>"; };
-		0BB16B712E945A7A0039C126 /* AnalyticsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsManager.swift; sourceTree = "<group>"; };
 		0BB16B722E945A7A0039C126 /* AnalyticsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsStorage.swift; sourceTree = "<group>"; };
 		0BB16BD72E9561760039C126 /* BitcoinEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinEndpoints.swift; sourceTree = "<group>"; };
 		0BB16BD92E9561760039C126 /* BitcoinRateModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinRateModels.swift; sourceTree = "<group>"; };
 		0BB16BDB2E9561760039C126 /* NetworkProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtocols.swift; sourceTree = "<group>"; };
 		0BB16BDD2E9561760039C126 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		0BB16BE42E9562BD0039C126 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		0BB16BE62E95645A0039C126 /* TransactionSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionSection.swift; sourceTree = "<group>"; };
+		0BB16BE82E956A1C0039C126 /* Rate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rate.swift; sourceTree = "<group>"; };
+		0BB16BEC2E956FCA0039C126 /* PaginationInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaginationInfo.swift; sourceTree = "<group>"; };
+		0BB16BEE2E9586BE0039C126 /* CurrentBalance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentBalance.swift; sourceTree = "<group>"; };
+		0BB16BF02E9591960039C126 /* BitcoinRateServiceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinRateServiceRepository.swift; sourceTree = "<group>"; };
+		0BB16BF22E9591CF0039C126 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		0BB16BF42E95A1340039C126 /* AnalyticsEventProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEventProtocol.swift; sourceTree = "<group>"; };
 		0D1540602D22EF5D00D6D63F /* AnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
 		0DF1D13F2D22DC4B001626E7 /* ServicesAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembler.swift; sourceTree = "<group>"; };
 		0DF1D1422D22DCD2001626E7 /* PerformOnce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformOnce.swift; sourceTree = "<group>"; };
@@ -150,6 +164,7 @@
 		0BB16AF92E9412E50039C126 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				0BB16BE42E9562BD0039C126 /* CoreDataManager.swift */,
 				1CA3B65E2D22B0F500176711 /* TransactionsTestTask.xcdatamodeld */,
 			);
 			path = Storage;
@@ -185,7 +200,6 @@
 			isa = PBXGroup;
 			children = (
 				0BB16B432E943C6B0039C126 /* Assembly */,
-				0BB16B3A2E9437E20039C126 /* Models */,
 				0BB16B3C2E9437E20039C126 /* Protocols */,
 				0BB16B0A2E9419F80039C126 /* ContentView */,
 				0BB16B062E9417240039C126 /* Models */,
@@ -219,6 +233,11 @@
 		0BB16B062E9417240039C126 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				0BB16BEE2E9586BE0039C126 /* CurrentBalance.swift */,
+				0BB16BEC2E956FCA0039C126 /* PaginationInfo.swift */,
+				0BB16B372E9437E20039C126 /* MainScreenModel.swift */,
+				0BB16BE82E956A1C0039C126 /* Rate.swift */,
+				0BB16BE62E95645A0039C126 /* TransactionSection.swift */,
 				0BB16B082E94189E0039C126 /* TransactionCategory.swift */,
 				0BB16B1F2E9422060039C126 /* Transaction.swift */,
 			);
@@ -262,7 +281,7 @@
 		0BB16B1A2E9420180039C126 /* Cell */ = {
 			isa = PBXGroup;
 			children = (
-				0BB16B1B2E9420210039C126 /* CategoryCell.swift */,
+				0BB16B1B2E9420210039C126 /* TransactionCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -294,14 +313,6 @@
 				0BB16B2E2E9436A70039C126 /* AddTransactionScreenProtocols.swift */,
 			);
 			path = Protocols;
-			sourceTree = "<group>";
-		};
-		0BB16B3A2E9437E20039C126 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				0BB16B372E9437E20039C126 /* MainScreenModel.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		0BB16B3C2E9437E20039C126 /* Protocols */ = {
@@ -374,7 +385,7 @@
 		0D15405F2D22EF3400D6D63F /* AnalyticsService */ = {
 			isa = PBXGroup;
 			children = (
-				0BB16B712E945A7A0039C126 /* AnalyticsManager.swift */,
+				0BB16BF42E95A1340039C126 /* AnalyticsEventProtocol.swift */,
 				0BB16B722E945A7A0039C126 /* AnalyticsStorage.swift */,
 				0DF1D1462D22DD44001626E7 /* AnalyticsService.swift */,
 				0D1540602D22EF5D00D6D63F /* AnalyticsEvent.swift */,
@@ -386,9 +397,11 @@
 			isa = PBXGroup;
 			children = (
 				0DF1D1412D22DCC3001626E7 /* Helpers */,
-				0DF1D13F2D22DC4B001626E7 /* ServicesAssembler.swift */,
+				0BB16BF02E9591960039C126 /* BitcoinRateServiceRepository.swift */,
 				0DF1D1442D22DCFF001626E7 /* BitcoinRateService.swift */,
+				0DF1D13F2D22DC4B001626E7 /* ServicesAssembler.swift */,
 				0D15405F2D22EF3400D6D63F /* AnalyticsService */,
+				0BB16BF22E9591CF0039C126 /* NetworkMonitor.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -574,15 +587,21 @@
 				0BB16B302E9436A70039C126 /* AddTransactionScreenModel.swift in Sources */,
 				0BB16B312E9436A70039C126 /* AddTransactionScreenProtocols.swift in Sources */,
 				0BB16B152E941DBB0039C126 /* ReusableViewProtocol.swift in Sources */,
+				0BB16BF52E95A1340039C126 /* AnalyticsEventProtocol.swift in Sources */,
 				0BB16B342E9437180039C126 /* Router.swift in Sources */,
 				0D1540612D22EF5D00D6D63F /* AnalyticsEvent.swift in Sources */,
+				0BB16BED2E956FCA0039C126 /* PaginationInfo.swift in Sources */,
+				0BB16BF32E9591CF0039C126 /* NetworkMonitor.swift in Sources */,
 				0BB16B132E941CAC0039C126 /* TableView.swift in Sources */,
+				0BB16BE92E956A1C0039C126 /* Rate.swift in Sources */,
 				0BB16B032E9417030039C126 /* MainContentView.swift in Sources */,
 				0DF1D1432D22DCD8001626E7 /* PerformOnce.swift in Sources */,
-				0BB16B1C2E9420210039C126 /* CategoryCell.swift in Sources */,
+				0BB16B1C2E9420210039C126 /* TransactionCell.swift in Sources */,
 				0DF1D1452D22DD06001626E7 /* BitcoinRateService.swift in Sources */,
 				0DF1D1472D22DD4A001626E7 /* AnalyticsService.swift in Sources */,
 				0BB16B172E941E080039C126 /* ConfigurableCell.swift in Sources */,
+				0BB16BF12E9591960039C126 /* BitcoinRateServiceRepository.swift in Sources */,
+				0BB16BE72E95645A0039C126 /* TransactionSection.swift in Sources */,
 				1CA3B6562D22B0F500176711 /* AppDelegate.swift in Sources */,
 				0BB16B052E94171C0039C126 /* MainPresenter.swift in Sources */,
 				1CA3B6582D22B0F500176711 /* SceneDelegate.swift in Sources */,
@@ -597,15 +616,16 @@
 				0BB16B112E941AAE0039C126 /* CornerView.swift in Sources */,
 				0BB16B252E942B4A0039C126 /* AddTransactionContentView.swift in Sources */,
 				1CA3B6602D22B0F500176711 /* TransactionsTestTask.xcdatamodeld in Sources */,
+				0BB16BE52E9562BD0039C126 /* CoreDataManager.swift in Sources */,
 				0BB16B272E942B520039C126 /* AddTransactionPresenter.swift in Sources */,
 				0BB16B442E943C6B0039C126 /* MainScreenAssembly.swift in Sources */,
 				0BB16B0D2E941A120039C126 /* CurrentBalanceView.swift in Sources */,
 				0DF1D1402D22DC51001626E7 /* ServicesAssembler.swift in Sources */,
+				0BB16BEF2E9586BE0039C126 /* CurrentBalance.swift in Sources */,
 				0BB16B3D2E9437E20039C126 /* MainScreenProtocols.swift in Sources */,
 				0BB16B472E943C990039C126 /* AddTransactionScreenAssembly.swift in Sources */,
 				0BB16B402E9437E20039C126 /* MainScreenModel.swift in Sources */,
 				0BB16B752E945A7A0039C126 /* AnalyticsStorage.swift in Sources */,
-				0BB16B762E945A7A0039C126 /* AnalyticsManager.swift in Sources */,
 				0BB16B012E9416FA0039C126 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

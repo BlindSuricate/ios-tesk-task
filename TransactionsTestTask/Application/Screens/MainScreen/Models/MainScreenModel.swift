@@ -8,42 +8,114 @@
 import Foundation
 
 final class MainScreenModel {
-    private var transactions: [Transaction] = []
+    let coreDataManager: CoreDataManager
+    private let pageSize: Int = 20
     
-    init() {
-        self.transactions = mockTransactions()
-    }
+    // Pagination state
+    private var currentPage: Int = 0
+    private var loadedTransactions: [Transaction] = []
+    private var totalItems: Int = 0
+    private var isLoading: Bool = false
     
-    private func mockTransactions() -> [Transaction] {
-        return [
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322)
-        ]
+    init(coreDataManager: CoreDataManager) {
+        self.coreDataManager = coreDataManager
+        self.totalItems = coreDataManager.getTotalTransactionsCount()
     }
 }
 
 // MARK: - MainScreenModelProtocol
 extension MainScreenModel: MainScreenModelProtocol {
     func getTransactions() -> [Transaction] {
-        return transactions
+        loadedTransactions
+    }
+    
+    func getTransactionSections() -> [TransactionSection] {
+        TransactionGrouper.groupTransactions(loadedTransactions)
+    }
+    
+    func loadFirstPage() {
+        guard !isLoading else { return }
+        isLoading = true
+        
+        currentPage = 0
+        loadedTransactions = coreDataManager.fetchTransactions(page: currentPage, pageSize: pageSize)
+        totalItems = coreDataManager.getTotalTransactionsCount()
+        isLoading = false
+    }
+    
+    func loadNextPage() -> Bool {
+        guard !isLoading else { return false }
+        guard hasMorePages() else { return false }
+        
+        isLoading = true
+        
+        currentPage += 1
+        let newTransactions = coreDataManager.fetchTransactions(page: currentPage, pageSize: pageSize)
+        loadedTransactions.append(contentsOf: newTransactions)
+        
+        isLoading = false
+        return true
+    }
+    
+    func refreshTransactions() {
+        guard !isLoading else { return }
+        isLoading = true
+        
+        currentPage = 0
+        loadedTransactions = coreDataManager.fetchTransactions(page: currentPage, pageSize: pageSize)
+        totalItems = coreDataManager.getTotalTransactionsCount()
+        
+        isLoading = false
+    }
+    
+    func getPaginationInfo() -> PaginationInfo {
+        let hasMore = hasMorePages()
+        return PaginationInfo(
+            currentPage: currentPage,
+            pageSize: pageSize,
+            totalItems: totalItems,
+            hasMorePages: hasMore
+        )
     }
     
     func addTransaction(_ transaction: Transaction) {
-        transactions.insert(transaction, at: 0)
+        coreDataManager.saveTransaction(transaction)
+        totalItems = coreDataManager.getTotalTransactionsCount()
+        refreshTransactions()
     }
     
-    func removeTransaction(at index: Int) {
-        guard index < transactions.count else { return }
-        transactions.remove(at: index)
+    
+    func removeTransaction(sectionIndex: Int, itemIndex: Int) {
+        let sections = getTransactionSections()
+        guard sectionIndex < sections.count else { return }
+        let section = sections[sectionIndex]
+        guard itemIndex < section.transactions.count else { return }
+        let transaction = section.transactions[itemIndex]
+        coreDataManager.deleteTransaction(withId: transaction.id)
+        totalItems = coreDataManager.getTotalTransactionsCount()
+        refreshTransactions()
+    }
+    
+    func getLatestRate() -> Rate? {
+        coreDataManager.fetchLatestRate()
+    }
+    
+    func getCurrentBalance() -> CurrentBalance? {
+        coreDataManager.getCurrentBalance()
+    }
+    
+    func topUpBalance(amount: Double) {
+        coreDataManager.updateCurrentBalance(by: amount)
+    }
+    
+    func deductFromBalance(amount: Double) {
+        coreDataManager.updateCurrentBalance(by: -amount)
+    }
+    
+    
+    // MARK: - Private Methods
+    private func hasMorePages() -> Bool {
+        let loadedCount = loadedTransactions.count
+        return loadedCount < totalItems
     }
 }

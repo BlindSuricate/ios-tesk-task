@@ -12,6 +12,7 @@ final class Router {
     // MARK: - Properties
     private var navigationController: UINavigationController?
     private var window: UIWindow?
+    private var mainScreenModel: MainScreenModelProtocol?
     
     // MARK: - Initialization
     init(window: UIWindow?) {
@@ -33,7 +34,11 @@ final class Router {
     
     // MARK: - Add Transaction Screen Navigation
     func showAddTransactionScreen() {
-        let addTransactionScreenViewController = AddTransactionScreenAssembly.build(router: self)
+        guard let mainScreenModel = mainScreenModel else {
+            print("Error: MainScreenModel or CoreDataManager not available")
+            return
+        }
+        let addTransactionScreenViewController = AddTransactionScreenAssembly.build(router: self, mainScreenModel: mainScreenModel)
         navigationController?.pushViewController(addTransactionScreenViewController, animated: true)
     }
     

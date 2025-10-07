@@ -43,9 +43,6 @@ class AddTransactionViewController: UIViewController {
         contentView.onSaveTransactionHandler = { [weak self] transaction in
             self?.presenter.saveTransactionTapped(transaction)
         }
-        contentView.onCancelHandler = { [weak self] in
-            self?.presenter.cancelTapped()
-        }
     }
 }
 

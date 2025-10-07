@@ -11,7 +11,7 @@ final class MainContentView: UIView {
     
     // MARK: - Handlers
     var onAddTransactionHandler: (() -> Void)?
-    var onTransactionSelectedHandler: ((Int) -> Void)?
+    var onTopUpBalanceHandler: (() -> Void)?
     
     //MARK: - Constants
     private enum Constants {
@@ -39,16 +39,6 @@ final class MainContentView: UIView {
         return tableView
     }()
     
-    private lazy var addTransactionButton: UIButton = {
-        let button = UIButton(type: .system).prepareForAutolayout()
-        button.setTitle("+ Add Transaction", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        button.setTitleColor(.white, for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 8
-        button.addTarget(self, action: #selector(addTransactionTapped), for: .touchUpInside)
-        return button
-    }()
 
     // MARK: - Constraints
     private var containerTopConstraint: NSLayoutConstraint!
@@ -72,6 +62,7 @@ final class MainContentView: UIView {
         backgroundColor = .lightGray
         setupConstraints()
         setupGesture()
+        setupHandlers()
     }
 
     required init?(coder: NSCoder) {
@@ -118,15 +109,19 @@ extension MainContentView {
             transactionsTableView.bottomAnchor.constraint(equalTo: transactionsContainerView.bottomAnchor)
         ])
         
-        transactionsContainerView.addSubview(addTransactionButton)
-        NSLayoutConstraint.activate([
-            addTransactionButton.bottomAnchor.constraint(equalTo: transactionsContainerView.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            addTransactionButton.leadingAnchor.constraint(equalTo: transactionsContainerView.leadingAnchor, constant: 16),
-            addTransactionButton.trailingAnchor.constraint(equalTo: transactionsContainerView.trailingAnchor, constant: -16),
-            addTransactionButton.heightAnchor.constraint(equalToConstant: 44)
-        ])
     }
 
+    // MARK: - Setup
+    private func setupHandlers() {
+        currentBalanceView.onAddTransactionHandler = { [weak self] in
+            self?.onAddTransactionHandler?()
+        }
+        
+        currentBalanceView.onTopUpBalanceHandler = { [weak self] in
+            self?.onTopUpBalanceHandler?()
+        }
+    }
+    
     // MARK: - Gesture Handling
     private func setupGesture() {
         let panGesture = UIPanGestureRecognizer(
@@ -162,9 +157,6 @@ extension MainContentView {
         }
     }
     
-    @objc private func addTransactionTapped() {
-        onAddTransactionHandler?()
-    }
 
     //MARK: -Animations
     private func animateContainer(to top: CGFloat) {
@@ -183,7 +175,8 @@ extension MainContentView {
 
 // MARK: - MainScreenViewProtocol
 extension MainContentView: MainScreenViewProtocol {
-    func updateTransactions(_ transactions: [Transaction]) {
+    
+    func updateTransactionSections(_ sections: [TransactionSection]) {
         reloadTableView()
     }
     
@@ -195,12 +188,24 @@ extension MainContentView: MainScreenViewProtocol {
         currentBalanceView.updateBitcoinRate(rate)
     }
     
+    func updateBitcoinRateWithDate(_ rate: Double, date: Date) {
+        currentBalanceView.updateBitcoinRateWithDate(rate, date: date)
+    }
+    
     func showBitcoinLoading() {
         currentBalanceView.showBitcoinLoading()
     }
     
     func showBitcoinError() {
         currentBalanceView.showBitcoinError()
+    }
+    
+    func updateBalance(_ amount: Double) {
+        currentBalanceView.updateBalance(amount)
+    }
+    
+    func updateBalance(_ currentBalance: CurrentBalance) {
+        currentBalanceView.updateBalance(currentBalance)
     }
 }
 

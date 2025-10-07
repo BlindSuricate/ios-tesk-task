@@ -7,11 +7,23 @@
 
 import Foundation
 
-final class AddTransactionScreenModel { }
+final class AddTransactionScreenModel {
+    private let coreDataManager: CoreDataManager
+    private let mainScreenModel: MainScreenModelProtocol
+    
+    init(
+        coreDataManager: CoreDataManager,
+        mainScreenModel: MainScreenModelProtocol
+    ) {
+        self.coreDataManager = coreDataManager
+        self.mainScreenModel = mainScreenModel
+    }
+}
 
 // MARK: - AddTransactionScreenModelProtocol
 extension AddTransactionScreenModel: AddTransactionScreenModelProtocol {
     func saveTransaction(_ transaction: Transaction) {
-        print("\(transaction)")
+        mainScreenModel.deductFromBalance(amount: transaction.amount)
+        mainScreenModel.addTransaction(transaction)
     }
 }

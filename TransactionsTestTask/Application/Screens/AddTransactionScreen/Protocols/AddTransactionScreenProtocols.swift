@@ -15,7 +15,6 @@ protocol AddTransactionScreenModelProtocol {
 // MARK: - Add Transaction Screen View Protocol
 protocol AddTransactionScreenViewProtocol: UIView {
     var onSaveTransactionHandler: ((Transaction) -> Void)? { get set }
-    var onCancelHandler: (() -> Void)? { get set }
 }
 
 // MARK: - Add Transaction Screen ViewController Protocol
@@ -28,5 +27,4 @@ protocol AddTransactionScreenPresenterProtocol {
     func loadView(controller: AddTransactionScreenViewControllerProtocol)
     func viewDidLoad()
     func saveTransactionTapped(_ transaction: Transaction)
-    func cancelTapped()
 }

@@ -30,9 +30,6 @@ private extension AddTransactionScreenPresenter {
         router.goBack()
     }
     
-    func onCancelTapped() {
-        router.goBack()
-    }
 }
 
 // MARK: - AddTransactionScreenPresenterProtocol
@@ -48,7 +45,4 @@ extension AddTransactionScreenPresenter: AddTransactionScreenPresenterProtocol {
         self.onSaveTransactionTapped(transaction)
     }
     
-    func cancelTapped() {
-        self.onCancelTapped()
-    }
 }

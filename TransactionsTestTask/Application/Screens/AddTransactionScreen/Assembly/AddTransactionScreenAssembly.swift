@@ -8,8 +8,13 @@
 import UIKit
 
 final class AddTransactionScreenAssembly {
-    static func build(router: Router) -> AddTransactionViewController {
-        let model = AddTransactionScreenModel()
+    static func build(router: Router, mainScreenModel: MainScreenModelProtocol) -> AddTransactionViewController {
+        let analyticsService = ServicesAssembler.analyticsService()
+        let coreDataManager = ServicesAssembler.coreDataManager()
+        let model = AddTransactionScreenModel(
+            coreDataManager: coreDataManager,
+            mainScreenModel: mainScreenModel
+        )
         
         let presenter = AddTransactionScreenPresenter(
             dependencies: .init(model: model, router: router)

@@ -21,14 +21,17 @@ final class BitcoinRateServiceImpl {
     // MARK: - Properties
     private let networkService: NetworkServiceProtocol
     private let analyticsService: AnalyticsService
+    private let coreDataManager: CoreDataManager
     
     // MARK: - Initialization
     init(
         networkService: NetworkServiceProtocol,
-        analyticsService: AnalyticsService
+        analyticsService: AnalyticsService,
+        coreDataManager: CoreDataManager
     ) {
         self.networkService = networkService
         self.analyticsService = analyticsService
+        self.coreDataManager = coreDataManager
     }
     
     // MARK: - BitcoinRateServiceProtocol
@@ -56,8 +59,13 @@ final class BitcoinRateServiceImpl {
             return
         }
         
+        let rate = Rate(rate: usdRate)
+        coreDataManager.saveRate(rate)
+        
         onRateUpdate?(usdRate)
+        
         analyticsService.trackEvent(name: "bitcoin_rate_updated", parameters: ["rate": String(usdRate)])
+        
         completion(.success(()))
     }
 }

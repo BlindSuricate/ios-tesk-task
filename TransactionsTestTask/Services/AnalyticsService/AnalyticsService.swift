@@ -13,6 +13,7 @@ import Foundation
 /// The service should be covered by unit tests
 protocol AnalyticsService: AnyObject {
     func trackEvent(name: String, parameters: [String: String])
+    func trackEvent(_ event: AnalyticsEventProtocol)
     func getEvents() -> [AnalyticsEvent]
     func clearEvents()
 }
@@ -38,8 +39,16 @@ final class AnalyticsServiceImpl: AnalyticsService {
         }
     }
     
+    func trackEvent(_ event: AnalyticsEventProtocol) {
+        let analyticsEvent = AnalyticsEvent(name: event.eventName, parameters: event.parameters)
+        queue.async { [weak self] in
+            self?.storage.saveEvent(analyticsEvent)
+            print("Analytics Event: \(analyticsEvent.name) - \(analyticsEvent.parameters)")
+        }
+    }
+    
     func getEvents() -> [AnalyticsEvent] {
-        return storage.getEvents()
+        storage.getEvents()
     }
     
     func clearEvents() {

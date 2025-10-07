@@ -10,27 +10,41 @@ import UIKit
 // MARK: - Main Screen Model Protocol
 protocol MainScreenModelProtocol {
     func getTransactions() -> [Transaction]
+    func getTransactionSections() -> [TransactionSection]
+    func loadFirstPage()
+    func loadNextPage() -> Bool
+    func refreshTransactions()
+    func getPaginationInfo() -> PaginationInfo
     func addTransaction(_ transaction: Transaction)
-    func removeTransaction(at index: Int)
+    func removeTransaction(sectionIndex: Int, itemIndex: Int)
+    func getLatestRate() -> Rate?
+    func getCurrentBalance() -> CurrentBalance?
+    func topUpBalance(amount: Double)
+    func deductFromBalance(amount: Double)
 }
 
 // MARK: - Main Screen View Protocol
 protocol MainScreenViewProtocol: UIView {
     var onAddTransactionHandler: (() -> Void)? { get set }
-    var onTransactionSelectedHandler: ((Int) -> Void)? { get set }
     
-    func updateTransactions(_ transactions: [Transaction])
+    func updateTransactionSections(_ sections: [TransactionSection])
     func reloadTableView()
     func updateBitcoinRate(_ rate: Double)
+    func updateBitcoinRateWithDate(_ rate: Double, date: Date)
+    func updateBalance(_ amount: Double)
+    func updateBalance(_ currentBalance: CurrentBalance)
     func showBitcoinLoading()
     func showBitcoinError()
 }
 
 // MARK: - Main Screen ViewController Protocol
 protocol MainScreenViewControllerProtocol: AnyObject {
-    func updateTransactions(_ transactions: [Transaction])
+    func updateTransactionSections(_ sections: [TransactionSection])
     func reloadTableView()
     func updateBitcoinRate(_ rate: Double)
+    func updateBitcoinRateWithDate(_ rate: Double, date: Date)
+    func updateBalance(_ amount: Double)
+    func updateBalance(_ currentBalance: CurrentBalance)
     func showBitcoinLoading()
     func showBitcoinError()
 }
@@ -39,7 +53,13 @@ protocol MainScreenViewControllerProtocol: AnyObject {
 protocol MainScreenPresenterProtocol {
     func loadView(controller: MainScreenViewControllerProtocol)
     func viewDidLoad()
+    func viewWillAppear()
     func addTransactionTapped()
-    func transactionSelected(at index: Int)
-    func getTransactions() -> [Transaction]
+    func topUpBalanceTapped()
+    func loadNextPage()
+    func refreshTransactions()
+    func getTransactionSections() -> [TransactionSection]
+    func getPaginationInfo() -> PaginationInfo
+    func getLatestRate() -> Rate?
+    func getModel() -> MainScreenModelProtocol
 }

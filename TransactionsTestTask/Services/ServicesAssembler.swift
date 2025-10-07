@@ -18,10 +18,12 @@ enum ServicesAssembler {
     static let bitcoinRateService: PerformOnce<BitcoinRateService> = {
         lazy var analyticsService = Self.analyticsService()
         lazy var networkService = Self.networkService()
+        lazy var coreDataManager = Self.coreDataManager()
         
         let service = BitcoinRateServiceImpl(
             networkService: networkService,
-            analyticsService: analyticsService
+            analyticsService: analyticsService,
+            coreDataManager: coreDataManager
         )
         
         return { service }
@@ -38,5 +40,11 @@ enum ServicesAssembler {
     static let networkService: PerformOnce<NetworkServiceProtocol> = {
         let networkService = NetworkService()
         return { networkService }
+    }()
+    
+    static let coreDataManager: PerformOnce<CoreDataManager> = {
+        let analyticsService = Self.analyticsService()
+        let coreDataManager = CoreDataManager(analyticsService: analyticsService)
+        return { coreDataManager }
     }()
 }

@@ -7,8 +7,23 @@
 
 import Foundation
 
-struct Transaction {
-    let category: TransactionCategiry
+struct Transaction: Identifiable, Codable {
+    let id: UUID
+    let category: TransactionCategory
     let amount: Double
-    let date: Date = .now
+    let date: Date
+    
+    init(category: TransactionCategory, amount: Double, date: Date = Date()) {
+        self.id = UUID()
+        self.category = category
+        self.amount = amount
+        self.date = date
+    }
+    
+    init(id: UUID, category: TransactionCategory, amount: Double, date: Date) {
+        self.id = id
+        self.category = category
+        self.amount = amount
+        self.date = date
+    }
 }
