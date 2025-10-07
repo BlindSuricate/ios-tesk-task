@@ -21,12 +21,18 @@ protocol MainScreenViewProtocol: UIView {
     
     func updateTransactions(_ transactions: [Transaction])
     func reloadTableView()
+    func updateBitcoinRate(_ rate: Double)
+    func showBitcoinLoading()
+    func showBitcoinError()
 }
 
 // MARK: - Main Screen ViewController Protocol
 protocol MainScreenViewControllerProtocol: AnyObject {
     func updateTransactions(_ transactions: [Transaction])
     func reloadTableView()
+    func updateBitcoinRate(_ rate: Double)
+    func showBitcoinLoading()
+    func showBitcoinError()
 }
 
 // MARK: - Main Screen Presenter Protocol
@@ -35,4 +41,5 @@ protocol MainScreenPresenterProtocol {
     func viewDidLoad()
     func addTransactionTapped()
     func transactionSelected(at index: Int)
+    func getTransactions() -> [Transaction]
 }

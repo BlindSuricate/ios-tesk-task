@@ -12,7 +12,11 @@ final class MainScreenAssembly {
         let model = MainScreenModel()
         
         let presenter = MainScreenPresenter(
-            dependencies: .init(model: model, router: router)
+            dependencies: .init(
+                model: model,
+                router: router,
+                bitcoinRateService: ServicesAssembler.bitcoinRateService()
+            )
         )
         
         let controller = MainViewController(

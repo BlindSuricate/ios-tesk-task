@@ -190,5 +190,17 @@ extension MainContentView: MainScreenViewProtocol {
     func reloadTableView() {
         transactionsTableView.reloadData()
     }
+    
+    func updateBitcoinRate(_ rate: Double) {
+        currentBalanceView.updateBitcoinRate(rate)
+    }
+    
+    func showBitcoinLoading() {
+        currentBalanceView.showBitcoinLoading()
+    }
+    
+    func showBitcoinError() {
+        currentBalanceView.showBitcoinError()
+    }
 }
 

@@ -17,15 +17,12 @@ enum ServicesAssembler {
     
     static let bitcoinRateService: PerformOnce<BitcoinRateService> = {
         lazy var analyticsService = Self.analyticsService()
+        lazy var networkService = Self.networkService()
         
-        let service = BitcoinRateServiceImpl()
-        
-        service.onRateUpdate = {
-            analyticsService.trackEvent(
-                name: "bitcoin_rate_update",
-                parameters: ["rate": String(format: "%.2f", $0)]
-            )
-        }
+        let service = BitcoinRateServiceImpl(
+            networkService: networkService,
+            analyticsService: analyticsService
+        )
         
         return { service }
     }()
@@ -36,5 +33,10 @@ enum ServicesAssembler {
         let service = AnalyticsServiceImpl()
         
         return { service }
+    }()
+    
+    static let networkService: PerformOnce<NetworkServiceProtocol> = {
+        let networkService = NetworkService()
+        return { networkService }
     }()
 }

@@ -10,16 +10,19 @@ import UIKit
 final class MainScreenPresenter {
     private let model: MainScreenModelProtocol
     private let router: Router
+    private let bitcoinRateService: BitcoinRateService
     private weak var controller: MainScreenViewControllerProtocol?
     
     struct Dependencies {
         let model: MainScreenModelProtocol
         let router: Router
+        let bitcoinRateService: BitcoinRateService
     }
     
     init(dependencies: Dependencies) {
         self.model = dependencies.model
         self.router = dependencies.router
+        self.bitcoinRateService = dependencies.bitcoinRateService
     }
 }
 
@@ -38,6 +41,27 @@ private extension MainScreenPresenter {
         let transactions = self.model.getTransactions()
         self.controller?.updateTransactions(transactions)
     }
+    
+    private func loadBitcoinRate() {
+        controller?.showBitcoinLoading()
+        
+        bitcoinRateService.getBitcoinRate { [weak self] result in
+            switch result {
+            case .success:
+                // Rate will be updated via onRateUpdate callback
+                break
+            case .failure(let error):
+                print("Failed to load Bitcoin rate: \(error)")
+                self?.controller?.showBitcoinError()
+            }
+        }
+    }
+    
+    private func setupBitcoinRateUpdates() {
+        bitcoinRateService.onRateUpdate = { [weak self] rate in
+            self?.controller?.updateBitcoinRate(rate)
+        }
+    }
 }
 
 // MARK: - MainScreenPresenterProtocol
@@ -48,6 +72,8 @@ extension MainScreenPresenter: MainScreenPresenterProtocol {
     
     func viewDidLoad() {
         self.updateView()
+        self.setupBitcoinRateUpdates()
+        self.loadBitcoinRate()
     }
     
     func addTransactionTapped() {
@@ -56,5 +82,9 @@ extension MainScreenPresenter: MainScreenPresenterProtocol {
     
     func transactionSelected(at index: Int) {
         self.onTransactionSelected(at: index)
+    }
+    
+    func getTransactions() -> [Transaction] {
+        model.getTransactions()
     }
 }

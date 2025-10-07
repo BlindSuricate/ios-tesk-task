@@ -35,7 +35,7 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.transactions = mockTransactions()
+        self.transactions = presenter.getTransactions()
         contentView?.transactionsTableView.dataSource = self
         contentView?.transactionsTableView.delegate = self
         
@@ -80,58 +80,6 @@ extension MainViewController: UITableViewDelegate {
     }
 }
 
-extension MainViewController {
-    func mockTransactions() -> [Transaction] {
-        return [
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322),
-            Transaction(category: .electronics, amount: 123),
-            Transaction(category: .groceries, amount: 333),
-            Transaction(category: .electronics, amount: 322)
-        ]
-    }
-}
-
 // MARK: - MainScreenViewControllerProtocol
 extension MainViewController: MainScreenViewControllerProtocol {
     func updateTransactions(_ transactions: [Transaction]) {
@@ -141,5 +89,17 @@ extension MainViewController: MainScreenViewControllerProtocol {
     
     func reloadTableView() {
         contentView?.reloadTableView()
+    }
+    
+    func updateBitcoinRate(_ rate: Double) {
+        contentView?.updateBitcoinRate(rate)
+    }
+    
+    func showBitcoinLoading() {
+        contentView?.showBitcoinLoading()
+    }
+    
+    func showBitcoinError() {
+        contentView?.showBitcoinError()
     }
 }
