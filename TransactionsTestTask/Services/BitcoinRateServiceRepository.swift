@@ -23,8 +23,8 @@ final class BitcoinRateServiceRepository: BitcoinRateServiceRepositoryProtocol {
     var onRateUpdate: ((Double) -> Void)?
     
     private let bitcoinRateService: BitcoinRateService
-    private let coreDataManager: CoreDataManager
-    private let networkMonitor: NetworkMonitor
+    private let coreDataManager: CoreDataManagerProtocol
+    private let networkMonitor: NetworkMonitoringProtocol
     private let analyticsService: AnalyticsService
     private var updateTimer: Timer?
     private let updateInterval: TimeInterval = 120
@@ -32,12 +32,13 @@ final class BitcoinRateServiceRepository: BitcoinRateServiceRepositoryProtocol {
     // MARK: - Initialization
     init(
         bitcoinRateService: BitcoinRateService,
-        coreDataManager: CoreDataManager,
+        coreDataManager: CoreDataManagerProtocol,
+        networkMonitor: NetworkMonitoringProtocol,
         analyticsService: AnalyticsService
     ) {
         self.bitcoinRateService = bitcoinRateService
         self.coreDataManager = coreDataManager
-        self.networkMonitor = NetworkMonitor()
+        self.networkMonitor = networkMonitor
         self.analyticsService = analyticsService
         
         setupBitcoinRateService()

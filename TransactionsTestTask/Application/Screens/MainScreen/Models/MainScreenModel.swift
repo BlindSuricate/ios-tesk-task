@@ -8,7 +8,7 @@
 import Foundation
 
 final class MainScreenModel {
-    let coreDataManager: CoreDataManager
+    let coreDataManager: CoreDataManagerProtocol
     private let pageSize: Int = 20
     
     // Pagination state
@@ -17,7 +17,7 @@ final class MainScreenModel {
     private var totalItems: Int = 0
     private var isLoading: Bool = false
     
-    init(coreDataManager: CoreDataManager) {
+    init(coreDataManager: CoreDataManagerProtocol) {
         self.coreDataManager = coreDataManager
         self.totalItems = coreDataManager.getTotalTransactionsCount()
     }

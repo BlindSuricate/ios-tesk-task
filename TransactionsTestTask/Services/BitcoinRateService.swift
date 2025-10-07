@@ -21,13 +21,13 @@ final class BitcoinRateServiceImpl {
     // MARK: - Properties
     private let networkService: NetworkServiceProtocol
     private let analyticsService: AnalyticsService
-    private let coreDataManager: CoreDataManager
+    private let coreDataManager: CoreDataManagerProtocol
     
     // MARK: - Initialization
     init(
         networkService: NetworkServiceProtocol,
         analyticsService: AnalyticsService,
-        coreDataManager: CoreDataManager
+        coreDataManager: CoreDataManagerProtocol
     ) {
         self.networkService = networkService
         self.analyticsService = analyticsService

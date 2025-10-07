@@ -29,7 +29,6 @@
 		0BB16B402E9437E20039C126 /* MainScreenModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B372E9437E20039C126 /* MainScreenModel.swift */; };
 		0BB16B442E943C6B0039C126 /* MainScreenAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B422E943C6B0039C126 /* MainScreenAssembly.swift */; };
 		0BB16B472E943C990039C126 /* AddTransactionScreenAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B452E943C990039C126 /* AddTransactionScreenAssembly.swift */; };
-		0BB16B752E945A7A0039C126 /* AnalyticsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16B722E945A7A0039C126 /* AnalyticsStorage.swift */; };
 		0BB16BE02E9561760039C126 /* BitcoinEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BD72E9561760039C126 /* BitcoinEndpoints.swift */; };
 		0BB16BE12E9561760039C126 /* BitcoinRateModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BD92E9561760039C126 /* BitcoinRateModels.swift */; };
 		0BB16BE22E9561760039C126 /* NetworkProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BDB2E9561760039C126 /* NetworkProtocols.swift */; };
@@ -42,6 +41,15 @@
 		0BB16BF12E9591960039C126 /* BitcoinRateServiceRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BF02E9591960039C126 /* BitcoinRateServiceRepository.swift */; };
 		0BB16BF32E9591CF0039C126 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BF22E9591CF0039C126 /* NetworkMonitor.swift */; };
 		0BB16BF52E95A1340039C126 /* AnalyticsEventProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BF42E95A1340039C126 /* AnalyticsEventProtocol.swift */; };
+		0BB16BFA2E95A79B0039C126 /* AnalyticsServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BF72E95A79B0039C126 /* AnalyticsServiceTests.swift */; };
+		0BB16BFD2E95B0B70039C126 /* BitcoinRateServiceRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BFC2E95B0B70039C126 /* BitcoinRateServiceRepositoryTests.swift */; };
+		0BB16BFF2E95B2040039C126 /* CoreDataManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16BFE2E95B2040039C126 /* CoreDataManagerProtocol.swift */; };
+		0BB16C072E95B9B70039C126 /* CoreDataManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16C062E95B9B70039C126 /* CoreDataManagerTests.swift */; };
+		0BB16C0A2E95BB520039C126 /* MockAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16C092E95BB520039C126 /* MockAnalyticsService.swift */; };
+		0BB16C0C2E95BB7E0039C126 /* MockAnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16C0B2E95BB7E0039C126 /* MockAnalyticsEvent.swift */; };
+		0BB16C0E2E95BBEC0039C126 /* MockCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16C0D2E95BBEC0039C126 /* MockCoreDataManager.swift */; };
+		0BB16C112E95BC420039C126 /* MockNetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16C102E95BC420039C126 /* MockNetworkMonitor.swift */; };
+		0BB16C132E95BC570039C126 /* MockBitcoinRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16C122E95BC570039C126 /* MockBitcoinRateService.swift */; };
 		0D1540612D22EF5D00D6D63F /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1540602D22EF5D00D6D63F /* AnalyticsEvent.swift */; };
 		0DF1D1402D22DC51001626E7 /* ServicesAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF1D13F2D22DC4B001626E7 /* ServicesAssembler.swift */; };
 		0DF1D1432D22DCD8001626E7 /* PerformOnce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF1D1422D22DCD2001626E7 /* PerformOnce.swift */; };
@@ -52,7 +60,6 @@
 		1CA3B6602D22B0F500176711 /* TransactionsTestTask.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3B65E2D22B0F500176711 /* TransactionsTestTask.xcdatamodeld */; };
 		1CA3B6622D22B0F600176711 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1CA3B6612D22B0F600176711 /* Assets.xcassets */; };
 		1CA3B6652D22B0F600176711 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 1CA3B6642D22B0F600176711 /* Base */; };
-		1CA3B6702D22B0F600176711 /* TransactionsTestTaskTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CA3B66F2D22B0F600176711 /* TransactionsTestTaskTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,7 +102,6 @@
 		0BB16B3B2E9437E20039C126 /* MainScreenProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenProtocols.swift; sourceTree = "<group>"; };
 		0BB16B422E943C6B0039C126 /* MainScreenAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreenAssembly.swift; sourceTree = "<group>"; };
 		0BB16B452E943C990039C126 /* AddTransactionScreenAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTransactionScreenAssembly.swift; sourceTree = "<group>"; };
-		0BB16B722E945A7A0039C126 /* AnalyticsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsStorage.swift; sourceTree = "<group>"; };
 		0BB16BD72E9561760039C126 /* BitcoinEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinEndpoints.swift; sourceTree = "<group>"; };
 		0BB16BD92E9561760039C126 /* BitcoinRateModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinRateModels.swift; sourceTree = "<group>"; };
 		0BB16BDB2E9561760039C126 /* NetworkProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkProtocols.swift; sourceTree = "<group>"; };
@@ -108,6 +114,15 @@
 		0BB16BF02E9591960039C126 /* BitcoinRateServiceRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinRateServiceRepository.swift; sourceTree = "<group>"; };
 		0BB16BF22E9591CF0039C126 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		0BB16BF42E95A1340039C126 /* AnalyticsEventProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEventProtocol.swift; sourceTree = "<group>"; };
+		0BB16BF72E95A79B0039C126 /* AnalyticsServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsServiceTests.swift; sourceTree = "<group>"; };
+		0BB16BFC2E95B0B70039C126 /* BitcoinRateServiceRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinRateServiceRepositoryTests.swift; sourceTree = "<group>"; };
+		0BB16BFE2E95B2040039C126 /* CoreDataManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerProtocol.swift; sourceTree = "<group>"; };
+		0BB16C062E95B9B70039C126 /* CoreDataManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManagerTests.swift; sourceTree = "<group>"; };
+		0BB16C092E95BB520039C126 /* MockAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsService.swift; sourceTree = "<group>"; };
+		0BB16C0B2E95BB7E0039C126 /* MockAnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockAnalyticsEvent.swift; sourceTree = "<group>"; };
+		0BB16C0D2E95BBEC0039C126 /* MockCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoreDataManager.swift; sourceTree = "<group>"; };
+		0BB16C102E95BC420039C126 /* MockNetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkMonitor.swift; sourceTree = "<group>"; };
+		0BB16C122E95BC570039C126 /* MockBitcoinRateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBitcoinRateService.swift; sourceTree = "<group>"; };
 		0D1540602D22EF5D00D6D63F /* AnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
 		0DF1D13F2D22DC4B001626E7 /* ServicesAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembler.swift; sourceTree = "<group>"; };
 		0DF1D1422D22DCD2001626E7 /* PerformOnce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformOnce.swift; sourceTree = "<group>"; };
@@ -121,7 +136,6 @@
 		1CA3B6642D22B0F600176711 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1CA3B6662D22B0F600176711 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1CA3B66B2D22B0F600176711 /* TransactionsTestTaskTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransactionsTestTaskTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1CA3B66F2D22B0F600176711 /* TransactionsTestTaskTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsTestTaskTests.swift; sourceTree = "<group>"; };
 		1CA3B6752D22B0F600176711 /* TransactionsTestTaskUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TransactionsTestTaskUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -164,6 +178,7 @@
 		0BB16AF92E9412E50039C126 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				0BB16BFE2E95B2040039C126 /* CoreDataManagerProtocol.swift */,
 				0BB16BE42E9562BD0039C126 /* CoreDataManager.swift */,
 				1CA3B65E2D22B0F500176711 /* TransactionsTestTask.xcdatamodeld */,
 			);
@@ -382,11 +397,22 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
+		0BB16C0F2E95BC250039C126 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				0BB16C0D2E95BBEC0039C126 /* MockCoreDataManager.swift */,
+				0BB16C0B2E95BB7E0039C126 /* MockAnalyticsEvent.swift */,
+				0BB16C092E95BB520039C126 /* MockAnalyticsService.swift */,
+				0BB16C102E95BC420039C126 /* MockNetworkMonitor.swift */,
+				0BB16C122E95BC570039C126 /* MockBitcoinRateService.swift */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
 		0D15405F2D22EF3400D6D63F /* AnalyticsService */ = {
 			isa = PBXGroup;
 			children = (
 				0BB16BF42E95A1340039C126 /* AnalyticsEventProtocol.swift */,
-				0BB16B722E945A7A0039C126 /* AnalyticsStorage.swift */,
 				0DF1D1462D22DD44001626E7 /* AnalyticsService.swift */,
 				0D1540602D22EF5D00D6D63F /* AnalyticsEvent.swift */,
 			);
@@ -449,7 +475,10 @@
 		1CA3B66E2D22B0F600176711 /* TransactionsTestTaskTests */ = {
 			isa = PBXGroup;
 			children = (
-				1CA3B66F2D22B0F600176711 /* TransactionsTestTaskTests.swift */,
+				0BB16C0F2E95BC250039C126 /* Mocks */,
+				0BB16C062E95B9B70039C126 /* CoreDataManagerTests.swift */,
+				0BB16BFC2E95B0B70039C126 /* BitcoinRateServiceRepositoryTests.swift */,
+				0BB16BF72E95A79B0039C126 /* AnalyticsServiceTests.swift */,
 			);
 			path = TransactionsTestTaskTests;
 			sourceTree = "<group>";
@@ -604,6 +633,7 @@
 				0BB16BE72E95645A0039C126 /* TransactionSection.swift in Sources */,
 				1CA3B6562D22B0F500176711 /* AppDelegate.swift in Sources */,
 				0BB16B052E94171C0039C126 /* MainPresenter.swift in Sources */,
+				0BB16BFF2E95B2040039C126 /* CoreDataManagerProtocol.swift in Sources */,
 				1CA3B6582D22B0F500176711 /* SceneDelegate.swift in Sources */,
 				0BB16B232E942B430039C126 /* AddTransactionViewController.swift in Sources */,
 				0BB16B092E94189E0039C126 /* TransactionCategory.swift in Sources */,
@@ -617,6 +647,7 @@
 				0BB16B252E942B4A0039C126 /* AddTransactionContentView.swift in Sources */,
 				1CA3B6602D22B0F500176711 /* TransactionsTestTask.xcdatamodeld in Sources */,
 				0BB16BE52E9562BD0039C126 /* CoreDataManager.swift in Sources */,
+				0BB16BFF2E95B2040039C126 /* CoreDataManagerProtocol.swift in Sources */,
 				0BB16B272E942B520039C126 /* AddTransactionPresenter.swift in Sources */,
 				0BB16B442E943C6B0039C126 /* MainScreenAssembly.swift in Sources */,
 				0BB16B0D2E941A120039C126 /* CurrentBalanceView.swift in Sources */,
@@ -625,7 +656,6 @@
 				0BB16B3D2E9437E20039C126 /* MainScreenProtocols.swift in Sources */,
 				0BB16B472E943C990039C126 /* AddTransactionScreenAssembly.swift in Sources */,
 				0BB16B402E9437E20039C126 /* MainScreenModel.swift in Sources */,
-				0BB16B752E945A7A0039C126 /* AnalyticsStorage.swift in Sources */,
 				0BB16B012E9416FA0039C126 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -634,7 +664,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CA3B6702D22B0F600176711 /* TransactionsTestTaskTests.swift in Sources */,
+				0BB16C0A2E95BB520039C126 /* MockAnalyticsService.swift in Sources */,
+				0BB16BFA2E95A79B0039C126 /* AnalyticsServiceTests.swift in Sources */,
+				0BB16C112E95BC420039C126 /* MockNetworkMonitor.swift in Sources */,
+				0BB16C072E95B9B70039C126 /* CoreDataManagerTests.swift in Sources */,
+				0BB16C0C2E95BB7E0039C126 /* MockAnalyticsEvent.swift in Sources */,
+				0BB16C0E2E95BBEC0039C126 /* MockCoreDataManager.swift in Sources */,
+				0BB16C132E95BC570039C126 /* MockBitcoinRateService.swift in Sources */,
+				0BB16BFD2E95B0B70039C126 /* BitcoinRateServiceRepositoryTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

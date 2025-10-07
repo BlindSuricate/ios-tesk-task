@@ -14,6 +14,7 @@ import Foundation
 protocol AnalyticsService: AnyObject {
     func trackEvent(name: String, parameters: [String: String])
     func trackEvent(_ event: AnalyticsEventProtocol)
+    func getEvents(name: String?, fromDate: Date?, toDate: Date?) -> [AnalyticsEvent]
     func getEvents() -> [AnalyticsEvent]
     func clearEvents()
 }
@@ -22,38 +23,73 @@ protocol AnalyticsService: AnyObject {
 final class AnalyticsServiceImpl: AnalyticsService {
     
     // MARK: - Properties
-    private let storage: AnalyticsStorageProtocol
+    private var events: [AnalyticsEvent] = []
     private let queue = DispatchQueue(label: "analytics.service.queue", attributes: .concurrent)
+    private let maxEventsCount: Int = 10000
     
     // MARK: - Initialization
-    init(storage: AnalyticsStorageProtocol = InMemoryAnalyticsStorage()) {
-        self.storage = storage
-    }
+    init() {}
     
     // MARK: - AnalyticsService
     func trackEvent(name: String, parameters: [String: String]) {
         let event = AnalyticsEvent(name: name, parameters: parameters)
-        queue.async { [weak self] in
-            self?.storage.saveEvent(event)
+        queue.async(flags: .barrier) { [weak self] in
+            guard let self else { return }
+            
+            self.events.append(event)
+            if self.events.count > self.maxEventsCount {
+                let excessCount = self.events.count - self.maxEventsCount
+                self.events.removeFirst(excessCount)
+            }
             print("Analytics Event: \(event.name) - \(event.parameters)")
         }
     }
     
     func trackEvent(_ event: AnalyticsEventProtocol) {
         let analyticsEvent = AnalyticsEvent(name: event.eventName, parameters: event.parameters)
-        queue.async { [weak self] in
-            self?.storage.saveEvent(analyticsEvent)
+        queue.async(flags: .barrier) { [weak self] in
+            guard let self else { return }
+            
+            self.events.append(analyticsEvent)
+            if self.events.count > self.maxEventsCount {
+                let excessCount = self.events.count - self.maxEventsCount
+                self.events.removeFirst(excessCount)
+            }
             print("Analytics Event: \(analyticsEvent.name) - \(analyticsEvent.parameters)")
         }
     }
     
+    func getEvents(name: String?, fromDate: Date?, toDate: Date?) -> [AnalyticsEvent] {
+        queue.sync {
+            let filteredEvents = events.filter { event in
+                if let name, !name.isEmpty {
+                    guard event.name == name else { return false }
+                }
+
+                if let fromDate {
+                    guard event.date >= fromDate else { return false }
+                }
+                
+                if let toDate {
+                    guard event.date <= toDate else { return false }
+                }
+                
+                return true
+            }
+            
+            return filteredEvents.sorted { $0.date > $1.date }
+        }
+    }
+    
     func getEvents() -> [AnalyticsEvent] {
-        storage.getEvents()
+        queue.sync {
+            events.sorted { $0.date > $1.date }
+        }
     }
     
     func clearEvents() {
         queue.async(flags: .barrier) { [weak self] in
-            self?.storage.clearEvents()
+            self?.events.removeAll()
         }
     }
 }

@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 // MARK: - Core Data Manager
-final class CoreDataManager {
+final class CoreDataManager: CoreDataManagerProtocol {
     
     // MARK: - Properties
     lazy var persistentContainer: NSPersistentContainer = {

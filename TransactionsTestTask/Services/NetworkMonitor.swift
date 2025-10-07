@@ -8,8 +8,13 @@
 import Foundation
 import Network
 
+// MARK: - Network Monitoring Protocol
+protocol NetworkMonitoringProtocol: AnyObject {
+    var isConnected: Bool { get }
+}
+
 // MARK: - Network Monitor
-final class NetworkMonitor {
+final class NetworkMonitor: NetworkMonitoringProtocol {
     private let monitor = NWPathMonitor()
     private let queue = DispatchQueue(label: "NetworkMonitor")
     var isConnected: Bool = false

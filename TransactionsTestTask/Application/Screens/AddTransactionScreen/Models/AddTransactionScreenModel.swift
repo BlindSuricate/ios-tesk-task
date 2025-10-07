@@ -8,11 +8,11 @@
 import Foundation
 
 final class AddTransactionScreenModel {
-    private let coreDataManager: CoreDataManager
+    private let coreDataManager: CoreDataManagerProtocol
     private let mainScreenModel: MainScreenModelProtocol
     
     init(
-        coreDataManager: CoreDataManager,
+        coreDataManager: CoreDataManagerProtocol,
         mainScreenModel: MainScreenModelProtocol
     ) {
         self.coreDataManager = coreDataManager

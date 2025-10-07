@@ -42,7 +42,7 @@ enum ServicesAssembler {
         return { networkService }
     }()
     
-    static let coreDataManager: PerformOnce<CoreDataManager> = {
+    static let coreDataManager: PerformOnce<CoreDataManagerProtocol> = {
         let analyticsService = Self.analyticsService()
         let coreDataManager = CoreDataManager(analyticsService: analyticsService)
         return { coreDataManager }
