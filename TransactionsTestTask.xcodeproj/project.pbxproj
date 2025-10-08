@@ -533,7 +533,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1630;
 				TargetAttributes = {
 					1CA3B6512D22B0F500176711 = {
 						CreatedOnToolsVersion = 15.4;
@@ -623,7 +623,6 @@
 				0BB16B252E942B4A0039C126 /* AddTransactionContentView.swift in Sources */,
 				1CA3B6602D22B0F500176711 /* TransactionsTestTask.xcdatamodeld in Sources */,
 				0BB16BE52E9562BD0039C126 /* CoreDataManager.swift in Sources */,
-				0BB16BFF2E95B2040039C126 /* CoreDataManagerProtocol.swift in Sources */,
 				0BB16B272E942B520039C126 /* AddTransactionPresenter.swift in Sources */,
 				0BB16B442E943C6B0039C126 /* MainScreenAssembly.swift in Sources */,
 				0BB16B0D2E941A120039C126 /* CurrentBalanceView.swift in Sources */,
