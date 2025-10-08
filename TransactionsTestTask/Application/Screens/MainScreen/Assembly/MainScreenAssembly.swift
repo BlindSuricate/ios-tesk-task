@@ -8,7 +8,7 @@
 import UIKit
 
 final class MainScreenAssembly {
-    static func build(router: Router) -> MainViewController {
+    static func build(router: Router) -> (viewController: MainViewController, model: MainScreenModelProtocol) {
         let analyticsService = ServicesAssembler.analyticsService()
         let coreDataManager = ServicesAssembler.coreDataManager()
         let model = MainScreenModel(coreDataManager: coreDataManager)
@@ -34,6 +34,6 @@ final class MainScreenAssembly {
             dependencies: .init(presenter: presenter)
         )
         
-        return controller
+        return (viewController: controller, model: model)
     }
 }

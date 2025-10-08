@@ -15,11 +15,13 @@ protocol AddTransactionScreenModelProtocol {
 // MARK: - Add Transaction Screen View Protocol
 protocol AddTransactionScreenViewProtocol: UIView {
     var onSaveTransactionHandler: ((Transaction) -> Void)? { get set }
+    var onCategoryButtonTappedHandler: (() -> Void)? { get set }
 }
 
 // MARK: - Add Transaction Screen ViewController Protocol
 protocol AddTransactionScreenViewControllerProtocol: AnyObject {
     func showError(_ message: String)
+    func showCategoryPicker()
 }
 
 // MARK: - Add Transaction Screen Presenter Protocol
@@ -27,4 +29,5 @@ protocol AddTransactionScreenPresenterProtocol {
     func loadView(controller: AddTransactionScreenViewControllerProtocol)
     func viewDidLoad()
     func saveTransactionTapped(_ transaction: Transaction)
+    func categoryButtonTapped()
 }

@@ -28,7 +28,10 @@ final class Router {
     
     // MARK: - Main Screen Navigation
     private func showMainScreen() {
-        let mainScreenViewController = MainScreenAssembly.build(router: self)
+        let mainScreenResult = MainScreenAssembly.build(router: self)
+        let mainScreenViewController = mainScreenResult.viewController
+        mainScreenModel = mainScreenResult.model
+        
         navigationController?.setViewControllers([mainScreenViewController], animated: false)
     }
     

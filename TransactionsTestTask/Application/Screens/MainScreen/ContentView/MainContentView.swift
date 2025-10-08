@@ -9,18 +9,47 @@ import UIKit
 
 final class MainContentView: UIView {
     
+    //MARK: - Constants
+    private enum Constants {
+        // MARK: - Layout
+        static let currentBalanceViewHeight: CGFloat = 250
+        static let inset: CGFloat = 16
+        static let topInset: CGFloat = 16
+        static let bottomInset: CGFloat = 16
+        static let leadingInset: CGFloat = 16
+        static let trailingInset: CGFloat = 16
+        
+        // MARK: - Animation
+        static let animationDuration: TimeInterval = 0.3
+        static let springDamping: CGFloat = 0.8
+        static let springVelocity: CGFloat = 0.5
+        
+        // MARK: - Layout Calculations
+        static let collapsedTopOffset: CGFloat = 72
+        
+        // MARK: - Pagination Loading
+        static let paginationLoadingHeight: CGFloat = 60
+        static let paginationSpacing: CGFloat = 8
+        
+        // MARK: - Drag Indicator
+        static let dragIndicatorWidth: CGFloat = 36
+        static let dragIndicatorHeight: CGFloat = 4
+        static let dragIndicatorTopOffset: CGFloat = 8
+        
+        // MARK: - Font Sizes
+        static let paginationLabelFontSize: CGFloat = 14
+        
+        // MARK: - Text Constants
+        static let paginationLoadingText = "Loading more transactions..."
+    }
+    
     // MARK: - Handlers
     var onAddTransactionHandler: (() -> Void)?
     var onTopUpBalanceHandler: (() -> Void)?
     
-    //MARK: - Constants
-    private enum Constants {
-        static let currentBalanceViewHeight: CGFloat = 250
-    }
-    
     // MARK: - Subviews
     private lazy var currentBalanceView: CurrentBalanceView = {
-        let view = CurrentBalanceView().prepareForAutolayout()
+        let view = CurrentBalanceView(cornerRadius: .large).prepareForAutolayout()
         return view
     }()
 
@@ -28,6 +57,13 @@ final class MainContentView: UIView {
         let view = CornerView().prepareForAutolayout()
         view.backgroundColor = .white
         view.clipsToBounds = true
+        return view
+    }()
+    
+    private lazy var dragIndicatorView: UIView = {
+        let view = UIView().prepareForAutolayout()
+        view.backgroundColor = .systemGray4
+        view.applyCornerRadius(.custom(2))
         return view
     }()
 
@@ -39,13 +75,36 @@ final class MainContentView: UIView {
         return tableView
     }()
     
+    private lazy var paginationLoadingView: UIView = {
+        let view = UIView().prepareForAutolayout()
+        view.backgroundColor = .white
+        view.isHidden = true
+        return view
+    }()
+    
+    private lazy var paginationActivityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        indicator.color = .systemGray
+        return indicator
+    }()
+    
+    private lazy var paginationLabel: UILabel = {
+        let label = UILabel().prepareForAutolayout()
+        label.text = Constants.paginationLoadingText
+        label.font = UIFont.systemFont(ofSize: Constants.paginationLabelFontSize, weight: .medium)
+        label.textColor = .systemGray
+        label.textAlignment = .center
+        return label
+    }()
+    
 
     // MARK: - Constraints
     private var containerTopConstraint: NSLayoutConstraint!
 
     // MARK: - Layout Metrics
     private var collapsedTopAnchor: CGFloat {
-        return 16 + Constants.currentBalanceViewHeight + 72
+        return Constants.topInset + Constants.currentBalanceViewHeight + Constants.collapsedTopOffset
     }
 
     private var expandedTopAnchor: CGFloat {
@@ -87,9 +146,9 @@ extension MainContentView {
         }
         
         NSLayoutConstraint.activate([
-            currentBalanceView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
-            currentBalanceView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            currentBalanceView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            currentBalanceView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Constants.topInset),
+            currentBalanceView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: Constants.leadingInset),
+            currentBalanceView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -Constants.trailingInset),
             currentBalanceView.heightAnchor.constraint(equalToConstant: Constants.currentBalanceViewHeight)
         ])
 
@@ -101,12 +160,36 @@ extension MainContentView {
             transactionsContainerView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         
+        transactionsContainerView.addSubview(dragIndicatorView)
         transactionsContainerView.addSubview(transactionsTableView)
+        transactionsContainerView.addSubview(paginationLoadingView)
+        
+        paginationLoadingView.addSubview(paginationActivityIndicator)
+        paginationLoadingView.addSubview(paginationLabel)
+        
         NSLayoutConstraint.activate([
-            transactionsTableView.topAnchor.constraint(equalTo: transactionsContainerView.topAnchor, constant: 16),
+            dragIndicatorView.centerXAnchor.constraint(equalTo: transactionsContainerView.centerXAnchor),
+            dragIndicatorView.topAnchor.constraint(equalTo: transactionsContainerView.topAnchor, constant: Constants.dragIndicatorTopOffset),
+            dragIndicatorView.widthAnchor.constraint(equalToConstant: Constants.dragIndicatorWidth),
+            dragIndicatorView.heightAnchor.constraint(equalToConstant: Constants.dragIndicatorHeight),
+            
+            transactionsTableView.topAnchor.constraint(equalTo: dragIndicatorView.bottomAnchor, constant: Constants.inset),
             transactionsTableView.leadingAnchor.constraint(equalTo: transactionsContainerView.leadingAnchor),
             transactionsTableView.trailingAnchor.constraint(equalTo: transactionsContainerView.trailingAnchor),
-            transactionsTableView.bottomAnchor.constraint(equalTo: transactionsContainerView.bottomAnchor)
+            transactionsTableView.bottomAnchor.constraint(equalTo: paginationLoadingView.topAnchor),
+            
+            paginationLoadingView.leadingAnchor.constraint(equalTo: transactionsContainerView.leadingAnchor),
+            paginationLoadingView.trailingAnchor.constraint(equalTo: transactionsContainerView.trailingAnchor),
+            paginationLoadingView.bottomAnchor.constraint(equalTo: transactionsContainerView.bottomAnchor),
+            paginationLoadingView.heightAnchor.constraint(equalToConstant: Constants.paginationLoadingHeight),
+            
+            paginationActivityIndicator.centerXAnchor.constraint(equalTo: paginationLoadingView.centerXAnchor),
+            paginationActivityIndicator.topAnchor.constraint(equalTo: paginationLoadingView.topAnchor, constant: Constants.paginationSpacing),
+            
+            paginationLabel.centerXAnchor.constraint(equalTo: paginationLoadingView.centerXAnchor),
+            paginationLabel.topAnchor.constraint(equalTo: paginationActivityIndicator.bottomAnchor, constant: Constants.paginationSpacing),
+            paginationLabel.leadingAnchor.constraint(greaterThanOrEqualTo: paginationLoadingView.leadingAnchor, constant: Constants.inset),
+            paginationLabel.trailingAnchor.constraint(lessThanOrEqualTo: paginationLoadingView.trailingAnchor, constant: -Constants.inset)
         ])
         
     }
@@ -161,10 +244,10 @@ extension MainContentView {
     //MARK: -Animations
     private func animateContainer(to top: CGFloat) {
         UIView.animate(
-            withDuration: 0.3,
+            withDuration: Constants.animationDuration,
             delay: 0,
-            usingSpringWithDamping: 0.8,
-            initialSpringVelocity: 0.5,
+            usingSpringWithDamping: Constants.springDamping,
+            initialSpringVelocity: Constants.springVelocity,
             options: [.curveEaseInOut]
         ) {
             self.containerTopConstraint.constant = top
@@ -206,6 +289,16 @@ extension MainContentView: MainScreenViewProtocol {
     
     func updateBalance(_ currentBalance: CurrentBalance) {
         currentBalanceView.updateBalance(currentBalance)
+    }
+    
+    func showPaginationLoading() {
+        paginationLoadingView.isHidden = false
+        paginationActivityIndicator.startAnimating()
+    }
+    
+    func hidePaginationLoading() {
+        paginationLoadingView.isHidden = true
+        paginationActivityIndicator.stopAnimating()
     }
 }
 

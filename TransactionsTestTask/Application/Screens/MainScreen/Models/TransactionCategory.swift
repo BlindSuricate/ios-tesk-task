@@ -19,8 +19,29 @@ enum TransactionCategory: String, Codable {
         self.rawValue.capitalized
     }
     
-    var icon: UIImage? {
-        UIImage()
+    var emoji: String {
+        switch self {
+        case .groceries:
+            return "🛒"
+        case .taxi:
+            return "🚕"
+        case .electronics:
+            return "📱"
+        case .restaurant:
+            return "🍽️"
+        case .other:
+            return "📝"
+        case .enrollment:
+            return "💰"
+        }
+    }
+    
+    var displayTitle: String {
+        return "\(emoji) \(title)"
+    }
+    
+    var isEnrollment: Bool {
+        self == .enrollment
     }
     
     static var expenseTransaction: [TransactionCategory] {

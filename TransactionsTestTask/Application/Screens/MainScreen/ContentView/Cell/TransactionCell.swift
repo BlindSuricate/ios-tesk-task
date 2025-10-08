@@ -20,25 +20,19 @@ final class TransactionCell: UITableViewCell {
     // MARK: - UI Elements
     private lazy var timeLabel: UILabel = {
         let label = UILabel().prepareForAutolayout()
-        label.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        label.textColor = .black
-        label.textAlignment = .left
+        label.setupStyle(.timeLabel)
         return label
     }()
     
     private lazy var categoryLabel: UILabel = {
         let label = UILabel().prepareForAutolayout()
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .systemBlue
-        label.textAlignment = .left
+        label.setupStyle(.categoryLabel)
         return label
     }()
     
     private lazy var bitcoinAmountLabel: UILabel = {
         let label = UILabel().prepareForAutolayout()
-        label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
-        label.textColor = .systemOrange
-        label.textAlignment = .right
+        label.setupStyle(.bitcoinAmountLabel)
         return label
     }()
     
@@ -117,18 +111,24 @@ extension TransactionCell {
 // MARK: - ConfigurableCell
 extension TransactionCell: ConfigurableCell {
     func configure(with model: Transaction) {
-        timeLabel.text = formatTime(model.date)
-        categoryLabel.text = model.category.title
-        bitcoinAmountLabel.text = model.amount.description
-        
+        timeLabel.text = model.date.shortTimeString
+        categoryLabel.text = model.category.displayTitle
+        configureAmountLabel(for: model)
     }
 }
 
 // MARK: - Private Methods
 extension TransactionCell {
-    private func formatTime(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.timeStyle = .short
-        return formatter.string(from: date)
+    private func configureAmountLabel(for transaction: Transaction) {
+        let isIncome = transaction.category.isEnrollment
+        let sign = isIncome ? "+" : "-"
+        let amountText = "\(sign)\(transaction.amount)"
+        
+        bitcoinAmountLabel.text = amountText
+        if isIncome {
+            bitcoinAmountLabel.setupStyle(.incomeAmountLabel)
+        } else {
+            bitcoinAmountLabel.setupStyle(.expenseAmountLabel)
+        }
     }
 }

@@ -142,9 +142,14 @@ extension MainScreenPresenter: MainScreenPresenterProtocol {
     }
     
     func loadNextPage() {
-        if model.loadNextPage() {
-            loadCurrentBalance()
-            updateView()
+        controller?.showPaginationLoading()
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { [weak self] in
+            if self?.model.loadNextPage() == true {
+                self?.loadCurrentBalance()
+                self?.updateView()
+            }
+            self?.controller?.hidePaginationLoading()
         }
     }
     

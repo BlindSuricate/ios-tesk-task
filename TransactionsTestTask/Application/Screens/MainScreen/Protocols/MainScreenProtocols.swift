@@ -35,6 +35,8 @@ protocol MainScreenViewProtocol: UIView {
     func updateBalance(_ currentBalance: CurrentBalance)
     func showBitcoinLoading()
     func showBitcoinError()
+    func showPaginationLoading()
+    func hidePaginationLoading()
 }
 
 // MARK: - Main Screen ViewController Protocol
@@ -47,6 +49,8 @@ protocol MainScreenViewControllerProtocol: AnyObject {
     func updateBalance(_ currentBalance: CurrentBalance)
     func showBitcoinLoading()
     func showBitcoinError()
+    func showPaginationLoading()
+    func hidePaginationLoading()
 }
 
 // MARK: - Main Screen Presenter Protocol

@@ -9,6 +9,29 @@ import UIKit
 
 final class CurrentBalanceView: CornerView {
     
+    // MARK: - Constants
+    private enum Constants {
+        static let mainStackSpacing: CGFloat = 12
+        static let buttonsStackSpacing: CGFloat = 12
+        static let bitcoinRateStackSpacing: CGFloat = 4
+        static let buttonHeight: CGFloat = 44
+        static let buttonsStackWidth: CGFloat = 320
+        static let horizontalInset: CGFloat = 16
+        static let topInset: CGFloat = 12
+        static let trailingInset: CGFloat = 12
+        
+        // MARK: - Text Constants
+        static let currentBalanceText = "Current Balance"
+        static let defaultBalanceText = "$0.00"
+        static let bitcoinLoadingText = "Bitcoin: Loading..."
+        static let bitcoinErrorText = "Bitcoin: Error loading rate"
+        static let addTransactionButtonText = "+ Add Transaction"
+        static let topUpBalanceButtonText = "💰 Top Up"
+        static let bitcoinRatePrefix = "Bitcoin: $"
+        static let updatedPrefix = "Updated: "
+        static let btcSuffix = " BTC"
+    }
+    
     // MARK: - Properties
     var onAddTransactionHandler: (() -> Void)?
     var onTopUpBalanceHandler: (() -> Void)?
@@ -16,58 +39,48 @@ final class CurrentBalanceView: CornerView {
     // MARK: - UI Elements
     private lazy var balanceLabel: UILabel = {
         let label = UILabel()
-        label.text = "Current Balance"
-        label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
-        label.textColor = .darkGray
-        label.textAlignment = .center
+        label.text = Constants.currentBalanceText
+        label.setupStyle(.balanceLabel)
         return label
     }()
     
     private lazy var balanceAmountLabel: UILabel = {
         let label = UILabel()
-        label.text = "$0.00"
-        label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
-        label.textColor = .black
-        label.textAlignment = .center
+        label.text = Constants.defaultBalanceText
+        label.setupStyle(.balanceAmountLabel)
         return label
     }()
     
     private lazy var bitcoinRateLabel: UILabel = {
         let label = UILabel()
-        label.text = "Bitcoin: Loading..."
-        label.font = UIFont.systemFont(ofSize: 14, weight: .regular)
-        label.textColor = .systemBlue
-        label.textAlignment = .center
+        label.text = Constants.bitcoinLoadingText
+        label.setupStyle(.bitcoinRateLabel)
         return label
     }()
     
     private lazy var bitcoinRateDateLabel: UILabel = {
         let label = UILabel()
         label.text = ""
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
-        label.textColor = .systemGray
-        label.textAlignment = .center
+        label.setupStyle(.bitcoinRateDateLabel)
         return label
     }()
     
     private lazy var addTransactionButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("+ Add Transaction", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitle(Constants.addTransactionButtonText, for: .normal)
+        button.setupStyle(.actionButton)
         button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 8
+        button.applyCornerRadius(.medium)
         button.addTarget(self, action: #selector(addTransactionTapped), for: .touchUpInside)
         return button
     }()
     
     private lazy var topUpBalanceButton: UIButton = {
         let button = UIButton(type: .system)
-        button.setTitle("💰 Top Up", for: .normal)
-        button.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .semibold)
-        button.setTitleColor(.white, for: .normal)
+        button.setTitle(Constants.topUpBalanceButtonText, for: .normal)
+        button.setupStyle(.actionButton)
         button.backgroundColor = .systemGreen
-        button.layer.cornerRadius = 8
+        button.applyCornerRadius(.medium)
         button.addTarget(self, action: #selector(topUpBalanceTapped), for: .touchUpInside)
         return button
     }()
@@ -75,7 +88,7 @@ final class CurrentBalanceView: CornerView {
     private lazy var buttonsStackView: UIStackView = {
         let stack = UIStackView(arrangedSubviews: [addTransactionButton, topUpBalanceButton])
         stack.axis = .horizontal
-        stack.spacing = 12
+        stack.spacing = Constants.buttonsStackSpacing
         stack.alignment = .center
         stack.distribution = .fillEqually
         return stack
@@ -88,7 +101,7 @@ final class CurrentBalanceView: CornerView {
             buttonsStackView
         ])
         stack.axis = .vertical
-        stack.spacing = 12
+        stack.spacing = Constants.mainStackSpacing
         stack.alignment = .center
         stack.distribution = .fillProportionally
         return stack
@@ -100,13 +113,13 @@ final class CurrentBalanceView: CornerView {
             bitcoinRateDateLabel
         ])
         stack.axis = .vertical
-        stack.spacing = 4
+        stack.spacing = Constants.bitcoinRateStackSpacing
         stack.alignment = .trailing
         return stack
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(cornerRadius: CornerRadiusConfig = .extraLarge) {
+        super.init(cornerRadius: cornerRadius)
         setupUI()
         setupConstraints()
     }
@@ -120,7 +133,7 @@ extension CurrentBalanceView {
     
     private func setupUI() {
         backgroundColor = .systemYellow
-        layer.cornerRadius = 12
+        applyCornerRadius(.large)
         addSubview(stackView)
         addSubview(bitcoinRateStackView)
     }
@@ -135,47 +148,47 @@ extension CurrentBalanceView {
         NSLayoutConstraint.activate([
             stackView.centerXAnchor.constraint(equalTo: centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: centerYAnchor),
-            stackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: 16),
-            stackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -16),
+            stackView.leadingAnchor.constraint(greaterThanOrEqualTo: leadingAnchor, constant: Constants.horizontalInset),
+            stackView.trailingAnchor.constraint(lessThanOrEqualTo: trailingAnchor, constant: -Constants.horizontalInset),
             
-            bitcoinRateStackView.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-            bitcoinRateStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12),
+            bitcoinRateStackView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.topInset),
+            bitcoinRateStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.trailingInset),
             
-            addTransactionButton.heightAnchor.constraint(equalToConstant: 44),
-            topUpBalanceButton.heightAnchor.constraint(equalToConstant: 44),
-            buttonsStackView.widthAnchor.constraint(equalToConstant: 320)
+            addTransactionButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
+            topUpBalanceButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
+            buttonsStackView.widthAnchor.constraint(equalToConstant: Constants.buttonsStackWidth)
         ])
     }
     
     // MARK: - Public Methods
     func updateBitcoinRate(_ rate: Double) {
-        bitcoinRateLabel.text = "Bitcoin: $\(String(format: "%.2f", rate))"
-        bitcoinRateDateLabel.text = "Updated: \(formatDate(Date()))"
+        bitcoinRateLabel.text = "\(Constants.bitcoinRatePrefix)\(String(format: "%.2f", rate))"
+        bitcoinRateDateLabel.text = "\(Constants.updatedPrefix)\(Date().shortDateTimeString)"
         bitcoinRateLabel.textColor = .systemBlue
     }
     
     func updateBitcoinRateWithDate(_ rate: Double, date: Date) {
-        bitcoinRateLabel.text = "Bitcoin: $\(String(format: "%.2f", rate))"
-        bitcoinRateDateLabel.text = "Updated: \(formatDate(date))"
+        bitcoinRateLabel.text = "\(Constants.bitcoinRatePrefix)\(String(format: "%.2f", rate))"
+        bitcoinRateDateLabel.text = "\(Constants.updatedPrefix)\(date.shortDateTimeString)"
         bitcoinRateLabel.textColor = .systemBlue
     }
     
     func updateBalance(_ amount: Double) {
-        balanceAmountLabel.text = "\(String(format: "%.5f", amount)) BTC"
+        balanceAmountLabel.text = "\(String(format: "%.5f", amount))\(Constants.btcSuffix)"
     }
     
     func updateBalance(_ currentBalance: CurrentBalance) {
-        balanceAmountLabel.text = "\(String(format: "%.5f", currentBalance.balance)) BTC"
+        balanceAmountLabel.text = "\(String(format: "%.5f", currentBalance.balance))\(Constants.btcSuffix)"
     }
     
     func showBitcoinLoading() {
-        bitcoinRateLabel.text = "Bitcoin: Loading..."
+        bitcoinRateLabel.text = Constants.bitcoinLoadingText
         bitcoinRateDateLabel.text = ""
         bitcoinRateLabel.textColor = .systemBlue
     }
     
     func showBitcoinError() {
-        bitcoinRateLabel.text = "Bitcoin: Error loading rate"
+        bitcoinRateLabel.text = Constants.bitcoinErrorText
         bitcoinRateDateLabel.text = ""
         bitcoinRateLabel.textColor = .systemRed
     }
@@ -189,11 +202,4 @@ extension CurrentBalanceView {
         onTopUpBalanceHandler?()
     }
     
-    // MARK: - Private Methods
-    private func formatDate(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .short
-        formatter.timeStyle = .short
-        return formatter.string(from: date)
-    }
 }

@@ -50,6 +50,10 @@
 		0BB16C0E2E95BBEC0039C126 /* MockCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16C0D2E95BBEC0039C126 /* MockCoreDataManager.swift */; };
 		0BB16C112E95BC420039C126 /* MockNetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16C102E95BC420039C126 /* MockNetworkMonitor.swift */; };
 		0BB16C132E95BC570039C126 /* MockBitcoinRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16C122E95BC570039C126 /* MockBitcoinRateService.swift */; };
+		0BB16C172E9657800039C126 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16C142E9657800039C126 /* TextStyle.swift */; };
+		0BB16C182E9657800039C126 /* SetupStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16C152E9657800039C126 /* SetupStyle.swift */; };
+		0BB16C1A2E9658F70039C126 /* CornerRadiusConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16C192E9658F70039C126 /* CornerRadiusConfig.swift */; };
+		0BB16C1C2E9667D70039C126 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BB16C1B2E9667D70039C126 /* Date.swift */; };
 		0D1540612D22EF5D00D6D63F /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D1540602D22EF5D00D6D63F /* AnalyticsEvent.swift */; };
 		0DF1D1402D22DC51001626E7 /* ServicesAssembler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF1D13F2D22DC4B001626E7 /* ServicesAssembler.swift */; };
 		0DF1D1432D22DCD8001626E7 /* PerformOnce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DF1D1422D22DCD2001626E7 /* PerformOnce.swift */; };
@@ -123,6 +127,10 @@
 		0BB16C0D2E95BBEC0039C126 /* MockCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockCoreDataManager.swift; sourceTree = "<group>"; };
 		0BB16C102E95BC420039C126 /* MockNetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockNetworkMonitor.swift; sourceTree = "<group>"; };
 		0BB16C122E95BC570039C126 /* MockBitcoinRateService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockBitcoinRateService.swift; sourceTree = "<group>"; };
+		0BB16C142E9657800039C126 /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
+		0BB16C152E9657800039C126 /* SetupStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupStyle.swift; sourceTree = "<group>"; };
+		0BB16C192E9658F70039C126 /* CornerRadiusConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusConfig.swift; sourceTree = "<group>"; };
+		0BB16C1B2E9667D70039C126 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		0D1540602D22EF5D00D6D63F /* AnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
 		0DF1D13F2D22DC4B001626E7 /* ServicesAssembler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicesAssembler.swift; sourceTree = "<group>"; };
 		0DF1D1422D22DCD2001626E7 /* PerformOnce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformOnce.swift; sourceTree = "<group>"; };
@@ -167,6 +175,7 @@
 		0BB16AF82E9411C90039C126 /* Application */ = {
 			isa = PBXGroup;
 			children = (
+				0BB16C162E9657800039C126 /* Common */,
 				0BB16AFE2E9416370039C126 /* Extensions */,
 				0BB16AFC2E9413250039C126 /* Base */,
 				0BB16AFB2E94131E0039C126 /* Screens */,
@@ -227,10 +236,12 @@
 		0BB16AFE2E9416370039C126 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				0BB16C152E9657800039C126 /* SetupStyle.swift */,
 				0BB16B122E941CAC0039C126 /* TableView.swift */,
 				0BB16B142E941DBB0039C126 /* ReusableViewProtocol.swift */,
 				0BB16B162E941E080039C126 /* ConfigurableCell.swift */,
 				0BB16B1D2E9420B90039C126 /* UIView.swift */,
+				0BB16C1B2E9667D70039C126 /* Date.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -280,6 +291,8 @@
 		0BB16B0E2E941A900039C126 /* DesignSystem */ = {
 			isa = PBXGroup;
 			children = (
+				0BB16C192E9658F70039C126 /* CornerRadiusConfig.swift */,
+				0BB16C142E9657800039C126 /* TextStyle.swift */,
 				0BB16B0F2E941AA10039C126 /* Views */,
 			);
 			path = DesignSystem;
@@ -407,6 +420,13 @@
 				0BB16C122E95BC570039C126 /* MockBitcoinRateService.swift */,
 			);
 			path = Mocks;
+			sourceTree = "<group>";
+		};
+		0BB16C162E9657800039C126 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		0D15405F2D22EF3400D6D63F /* AnalyticsService */ = {
@@ -644,6 +664,8 @@
 				0BB16B1E2E9420B90039C126 /* UIView.swift in Sources */,
 				0BB16B202E9422060039C126 /* Transaction.swift in Sources */,
 				0BB16B112E941AAE0039C126 /* CornerView.swift in Sources */,
+				0BB16C172E9657800039C126 /* TextStyle.swift in Sources */,
+				0BB16C182E9657800039C126 /* SetupStyle.swift in Sources */,
 				0BB16B252E942B4A0039C126 /* AddTransactionContentView.swift in Sources */,
 				1CA3B6602D22B0F500176711 /* TransactionsTestTask.xcdatamodeld in Sources */,
 				0BB16BE52E9562BD0039C126 /* CoreDataManager.swift in Sources */,
@@ -652,10 +674,12 @@
 				0BB16B442E943C6B0039C126 /* MainScreenAssembly.swift in Sources */,
 				0BB16B0D2E941A120039C126 /* CurrentBalanceView.swift in Sources */,
 				0DF1D1402D22DC51001626E7 /* ServicesAssembler.swift in Sources */,
+				0BB16C1C2E9667D70039C126 /* Date.swift in Sources */,
 				0BB16BEF2E9586BE0039C126 /* CurrentBalance.swift in Sources */,
 				0BB16B3D2E9437E20039C126 /* MainScreenProtocols.swift in Sources */,
 				0BB16B472E943C990039C126 /* AddTransactionScreenAssembly.swift in Sources */,
 				0BB16B402E9437E20039C126 /* MainScreenModel.swift in Sources */,
+				0BB16C1A2E9658F70039C126 /* CornerRadiusConfig.swift in Sources */,
 				0BB16B012E9416FA0039C126 /* MainViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -9,6 +9,13 @@ import UIKit
 
 final class MainViewController: UIViewController {
     
+    // MARK: - Constants
+    private enum Constants {
+        static let cellHeight: CGFloat = 100
+        static let headerHeight: CGFloat = 40
+        static let paginationTriggerOffset: Int = 3
+    }
+    
     private let presenter: MainScreenPresenterProtocol
     private var transactionSections: [TransactionSection] = []
     
@@ -40,7 +47,6 @@ final class MainViewController: UIViewController {
         contentView?.transactionsTableView.delegate = self
         
         setupViewHandlers()
-        setupPullToRefresh()
         presenter.loadView(controller: self)
         presenter.viewDidLoad()
     }
@@ -59,16 +65,6 @@ final class MainViewController: UIViewController {
         }
     }
     
-    private func setupPullToRefresh() {
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refreshTransactions), for: .valueChanged)
-        contentView?.transactionsTableView.refreshControl = refreshControl
-    }
-    
-    @objc private func refreshTransactions() {
-        presenter.refreshTransactions()
-        contentView?.transactionsTableView.refreshControl?.endRefreshing()
-    }
 }
 
 //MARK: - TableView dataSource
@@ -94,7 +90,7 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        100
+        Constants.cellHeight
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -103,7 +99,7 @@ extension MainViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        40
+        Constants.headerHeight
     }
 }
 
@@ -114,7 +110,7 @@ extension MainViewController: UITableViewDelegate {
         
         if indexPath.section == transactionSections.count - 1 {
             let lastSection = transactionSections[indexPath.section]
-            if indexPath.row >= lastSection.transactions.count - 3 && paginationInfo.hasMorePages {
+            if indexPath.row >= lastSection.transactions.count - Constants.paginationTriggerOffset && paginationInfo.hasMorePages {
                 presenter.loadNextPage()
             }
         }
@@ -155,6 +151,14 @@ extension MainViewController: MainScreenViewControllerProtocol {
     
     func updateBalance(_ currentBalance: CurrentBalance) {
         contentView?.updateBalance(currentBalance)
+    }
+    
+    func showPaginationLoading() {
+        contentView?.showPaginationLoading()
+    }
+    
+    func hidePaginationLoading() {
+        contentView?.hidePaginationLoading()
     }
     
     // MARK: - Helper Methods

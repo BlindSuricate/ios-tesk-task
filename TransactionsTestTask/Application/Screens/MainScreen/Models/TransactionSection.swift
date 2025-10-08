@@ -13,18 +13,7 @@ struct TransactionSection {
     let transactions: [Transaction]
     
     var title: String {
-        let calendar = Calendar.current
-        let today = Date()
-        
-        if calendar.isDate(date, inSameDayAs: today) {
-            return "Today"
-        } else if calendar.isDate(date, inSameDayAs: calendar.date(byAdding: .day, value: -1, to: today) ?? today) {
-            return "Yesterday"
-        } else {
-            let formatter = DateFormatter()
-            formatter.dateStyle = .medium
-            return formatter.string(from: date)
-        }
+        return date.sectionTitle
     }
     
     var totalAmount: Double {

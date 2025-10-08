@@ -7,11 +7,11 @@
 
 import UIKit
 
-//TODO: Default configuration
 class CornerView: UIView {
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.layer.cornerRadius = 16 // добавити дефолтну конфігурацію для відступів та радіусу
+    
+    init(cornerRadius: CornerRadiusConfig = .extraLarge) {
+        super.init(frame: .zero)
+        applyCornerRadius(cornerRadius)
     }
     
     required init?(coder: NSCoder) {

@@ -45,4 +45,7 @@ extension AddTransactionScreenPresenter: AddTransactionScreenPresenterProtocol {
         self.onSaveTransactionTapped(transaction)
     }
     
+    func categoryButtonTapped() {
+        controller?.showCategoryPicker()
+    }
 }
