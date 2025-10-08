@@ -59,12 +59,6 @@ final class TransactionCell: UITableViewCell {
         return stack
     }()
     
-    private lazy var separatorView: UIView = {
-        let view = UIView().prepareForAutolayout()
-        view.backgroundColor = .systemGray5
-        return view
-    }()
-    
     // MARK: - Properties
     private var currentBitcoinRate: Double = 0
     
@@ -87,7 +81,6 @@ extension TransactionCell {
         
         addSubview(leftStackView)
         addSubview(rightStackView)
-        addSubview(separatorView)
     }
     
     private func setupConstraints() {
@@ -99,11 +92,6 @@ extension TransactionCell {
             rightStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.horizontalPadding),
             rightStackView.centerYAnchor.constraint(equalTo: centerYAnchor),
             rightStackView.leadingAnchor.constraint(greaterThanOrEqualTo: leftStackView.trailingAnchor, constant: Constants.horizontalPadding),
-            
-            separatorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.horizontalPadding),
-            separatorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.horizontalPadding),
-            separatorView.bottomAnchor.constraint(equalTo: bottomAnchor),
-            separatorView.heightAnchor.constraint(equalToConstant: 1)
         ])
     }
 }
