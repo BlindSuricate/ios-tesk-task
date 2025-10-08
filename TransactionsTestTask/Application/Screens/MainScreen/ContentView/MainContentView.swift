@@ -70,6 +70,7 @@ final class MainContentView: UIView {
     private(set) lazy var transactionsTableView: UITableView = {
         let tableView = UITableView().prepareForAutolayout()
         tableView.register(TransactionCell.self)
+        tableView.backgroundColor = .white
         tableView.alwaysBounceVertical = true
         tableView.showsVerticalScrollIndicator = false
         return tableView

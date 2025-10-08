@@ -13,6 +13,11 @@ class AddTransactionViewController: UIViewController {
     private enum Constants {
         static let pickerTag = 999
         static let pickerHeight: CGFloat = 162
+        
+        // MARK: - Alert Text Constants
+        static let selectCategoryAlertTitle = "Select Category"
+        static let selectButtonTitle = "Select"
+        static let cancelButtonTitle = "Cancel"
     }
     
     private let presenter: AddTransactionScreenPresenterProtocol
@@ -92,10 +97,10 @@ extension AddTransactionViewController: AddTransactionScreenViewControllerProtoc
             pickerView.selectRow(selectedIndex, inComponent: 0, animated: false)
         }
         
-        let alert = UIAlertController(title: "Select Category", message: nil, preferredStyle: .actionSheet)
+        let alert = UIAlertController(title: Constants.selectCategoryAlertTitle, message: nil, preferredStyle: .actionSheet)
         alert.setValue(pickerViewController, forKey: "contentViewController")
         
-        let selectAction = UIAlertAction(title: "Select", style: .default) { [weak self] _ in
+        let selectAction = UIAlertAction(title: Constants.selectButtonTitle, style: .default) { [weak self] _ in
             let selectedRow = pickerView.selectedRow(inComponent: 0)
             if selectedRow < categories.count {
                 let selectedCategory = categories[selectedRow]
@@ -103,7 +108,7 @@ extension AddTransactionViewController: AddTransactionScreenViewControllerProtoc
             }
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
+        let cancelAction = UIAlertAction(title: Constants.cancelButtonTitle, style: .cancel)
         
         alert.addAction(selectAction)
         alert.addAction(cancelAction)

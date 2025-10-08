@@ -165,7 +165,14 @@ private extension AddTransactionContentView {
     
     @objc func saveTapped() {
         guard let amountText = amountTextField.text,
-              let amount = Double(amountText),
+              !amountText.isEmpty else {
+            showError(Constants.valideAmountError)
+            return
+        }
+
+        let normalizedText = amountText.replacingOccurrences(of: ",", with: ".")
+        
+        guard let amount = Double(normalizedText),
               amount > 0 else {
             showError(Constants.valideAmountError)
             return
@@ -188,9 +195,12 @@ private extension AddTransactionContentView {
 // MARK: - Private Methods
 private extension AddTransactionContentView {
     func updateSaveButtonState() {
-        let hasValidAmount = !(amountTextField.text?.isEmpty ?? true) && 
-                           Double(amountTextField.text ?? "") != nil &&
-                           (Double(amountTextField.text ?? "") ?? 0) > 0
+        let amountText = amountTextField.text ?? ""
+        let normalizedAmountText = amountText.replacingOccurrences(of: ",", with: ".")
+        
+        let hasValidAmount = !amountText.isEmpty && 
+                           Double(normalizedAmountText) != nil &&
+                           (Double(normalizedAmountText) ?? 0) > 0
         
         let hasSelectedCategory = categoryButton.title(for: .normal) != Constants.selectCategoryButtonText
         
@@ -231,4 +241,5 @@ extension AddTransactionContentView: AddTransactionScreenViewProtocol {
         updateSaveButtonState()
     }
 }
+
 

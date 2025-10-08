@@ -37,12 +37,12 @@ final class Router {
     
     // MARK: - Add Transaction Screen Navigation
     func showAddTransactionScreen() {
-        guard let mainScreenModel = mainScreenModel else {
-            print("Error: MainScreenModel or CoreDataManager not available")
-            return
+        var addTransactionScreen = AddTransactionScreenAssembly.build(router: self)
+        addTransactionScreen.presenter.onSaveTapped = { [weak self] transaction in
+            self?.mainScreenModel?.deductFromBalance(amount: transaction.amount)
+            self?.mainScreenModel?.addTransaction(transaction)
         }
-        let addTransactionScreenViewController = AddTransactionScreenAssembly.build(router: self, mainScreenModel: mainScreenModel)
-        navigationController?.pushViewController(addTransactionScreenViewController, animated: true)
+        navigationController?.pushViewController(addTransactionScreen.view, animated: true)
     }
     
     // MARK: - Back Navigation

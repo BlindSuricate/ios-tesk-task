@@ -29,7 +29,7 @@ extension CornerRadiusConfig {
     
     // MARK: - Custom Radius
     static func custom(_ radius: CGFloat) -> CornerRadiusConfig {
-        return CornerRadiusConfig(radius)
+        CornerRadiusConfig(radius)
     }
 }
 

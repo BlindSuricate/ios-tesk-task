@@ -47,7 +47,7 @@ extension Date {
         } else if calendar.isDate(self, inSameDayAs: calendar.date(byAdding: .day, value: -1, to: today) ?? today) {
             return "Yesterday"
         } else {
-            return self.mediumDateString
+            return mediumDateString
         }
     }
 }

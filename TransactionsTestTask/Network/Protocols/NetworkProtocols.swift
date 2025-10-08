@@ -19,17 +19,17 @@ enum NetworkError: Error, LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidURL:
-            return "Invalid URL"
+            "Invalid URL"
         case .noData:
-            return "No data received"
+            "No data received"
         case .decodingError(let error):
-            return "Decoding error: \(error.localizedDescription)"
+            "Decoding error: \(error.localizedDescription)"
         case .networkError(let error):
-            return "Network error: \(error.localizedDescription)"
+            "Network error: \(error.localizedDescription)"
         case .serverError(let code):
-            return "Server error with code: \(code)"
+            "Server error with code: \(code)"
         case .unknown:
-            return "Unknown error occurred"
+            "Unknown error occurred"
         }
     }
 }

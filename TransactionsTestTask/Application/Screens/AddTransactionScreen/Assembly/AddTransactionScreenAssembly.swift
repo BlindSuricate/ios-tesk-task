@@ -8,22 +8,15 @@
 import UIKit
 
 final class AddTransactionScreenAssembly {
-    static func build(router: Router, mainScreenModel: MainScreenModelProtocol) -> AddTransactionViewController {
-        let analyticsService = ServicesAssembler.analyticsService()
-        let coreDataManager = ServicesAssembler.coreDataManager()
-        let model = AddTransactionScreenModel(
-            coreDataManager: coreDataManager,
-            mainScreenModel: mainScreenModel
-        )
-        
+    static func build(router: Router) -> (view: AddTransactionViewController, presenter: AddTransactionScreenPresenterProtocol) {
         let presenter = AddTransactionScreenPresenter(
-            dependencies: .init(model: model, router: router)
+            dependencies: .init(router: router)
         )
         
         let controller = AddTransactionViewController(
             dependencies: .init(presenter: presenter)
         )
         
-        return controller
+        return (controller, presenter)
     }
 }

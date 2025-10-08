@@ -8,6 +8,7 @@
 import UIKit
 
 final class MainScreenPresenter {
+    
     private let model: MainScreenModelProtocol
     private let router: Router
     private var bitcoinRateServiceRepository: BitcoinRateServiceRepositoryProtocol
@@ -33,13 +34,7 @@ final class MainScreenPresenter {
 // MARK: - Private extension
 private extension MainScreenPresenter {
     private func onAddTransactionTapped() {
-        self.router.showAddTransactionScreen()
-    }
-    
-    private func updateView() {
-        let sections = self.model.getTransactionSections()
-        self.controller?.updateTransactionSections(sections)
-        loadCurrentBalance()
+        router.showAddTransactionScreen()
     }
     
     private func loadBitcoinRate() {
@@ -53,72 +48,24 @@ private extension MainScreenPresenter {
         }
     }
     
-    private func loadCurrentBalance() {
-        if let currentBalance = model.getCurrentBalance() {
-            controller?.updateBalance(currentBalance)
-        } else {
-            controller?.updateBalance(0.0)
-        }
-    }
-    
     private func setupBitcoinRateUpdates() {
         bitcoinRateServiceRepository.onRateUpdate = { [weak self] rate in
             self?.controller?.updateBitcoinRate(rate)
         }
     }
     
-    private func showTopUpBalanceAlert() {
-        let alert = UIAlertController(title: "Top Up Balance", message: "Enter the amount of bitcoins to add to your balance", preferredStyle: .alert)
-        
-        alert.addTextField { textField in
-            textField.placeholder = "Amount (BTC)"
-            textField.keyboardType = .decimalPad
-        }
-        
-        let addAction = UIAlertAction(title: "Add", style: .default) { [weak self] _ in
-            guard let textField = alert.textFields?.first,
-                  let text = textField.text,
-                  !text.isEmpty,
-                  let amount = Double(text),
-                  amount > 0 else {
-                return
-            }
-            
-            self?.model.topUpBalance(amount: amount)
-            
-            let topUpTransaction = Transaction(
-                id: UUID(),
-                category: .enrollment,
-                amount: amount,
-                date: Date()
-            )
-            
-            self?.model.addTransaction(topUpTransaction)
-            self?.loadCurrentBalance()
-            self?.updateView()
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel)
-        
-        alert.addAction(addAction)
-        alert.addAction(cancelAction)
-        
-        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-           let window = windowScene.windows.first,
-           let rootViewController = window.rootViewController {
-            var topController = rootViewController
-            while let presentedController = topController.presentedViewController {
-                topController = presentedController
-            }
-            topController.present(alert, animated: true)
-        }
-    }
 }
 
 // MARK: - MainScreenPresenterProtocol
 extension MainScreenPresenter: MainScreenPresenterProtocol {
     func loadView(controller: MainScreenViewControllerProtocol) {
         self.controller = controller
+    }
+    
+    func updateView() {
+        let sections = model.getTransactionSections()
+        controller?.updateTransactionSections(sections)
+        loadCurrentBalance()
     }
     
     func viewDidLoad() {
@@ -134,7 +81,15 @@ extension MainScreenPresenter: MainScreenPresenterProtocol {
     }
     
     func topUpBalanceTapped() {
-        showTopUpBalanceAlert()
+        controller?.showTopUpBalanceAlert()
+    }
+    
+    func loadCurrentBalance() {
+        if let currentBalance = model.getCurrentBalance() {
+            controller?.updateBalance(currentBalance)
+        } else {
+            controller?.updateBalance(0.0)
+        }
     }
     
     func getTransactionSections() -> [TransactionSection] {
@@ -187,3 +142,4 @@ extension MainScreenPresenter: MainScreenPresenterProtocol {
         updateView()
     }
 }
+

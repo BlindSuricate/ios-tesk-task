@@ -8,17 +8,16 @@
 import UIKit
 
 final class AddTransactionScreenPresenter {
-    private let model: AddTransactionScreenModelProtocol
     private let router: Router
     private weak var controller: AddTransactionScreenViewControllerProtocol?
     
+    var onSaveTapped: ((Transaction) -> Void)?
+
     struct Dependencies {
-        let model: AddTransactionScreenModelProtocol
         let router: Router
     }
     
     init(dependencies: Dependencies) {
-        self.model = dependencies.model
         self.router = dependencies.router
     }
 }
@@ -26,10 +25,9 @@ final class AddTransactionScreenPresenter {
 // MARK: - Private extension
 private extension AddTransactionScreenPresenter {
     func onSaveTransactionTapped(_ transaction: Transaction) {
-        model.saveTransaction(transaction)
+        onSaveTapped?(transaction)
         router.goBack()
     }
-    
 }
 
 // MARK: - AddTransactionScreenPresenterProtocol

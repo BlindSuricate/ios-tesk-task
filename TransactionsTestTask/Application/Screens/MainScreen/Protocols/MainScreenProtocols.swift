@@ -51,6 +51,7 @@ protocol MainScreenViewControllerProtocol: AnyObject {
     func showBitcoinError()
     func showPaginationLoading()
     func hidePaginationLoading()
+    func showTopUpBalanceAlert()
 }
 
 // MARK: - Main Screen Presenter Protocol
@@ -58,6 +59,8 @@ protocol MainScreenPresenterProtocol {
     func loadView(controller: MainScreenViewControllerProtocol)
     func viewDidLoad()
     func viewWillAppear()
+    func updateView()
+    func loadCurrentBalance()
     func addTransactionTapped()
     func topUpBalanceTapped()
     func loadNextPage()

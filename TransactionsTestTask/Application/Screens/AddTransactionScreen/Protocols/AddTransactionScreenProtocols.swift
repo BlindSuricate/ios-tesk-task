@@ -26,6 +26,8 @@ protocol AddTransactionScreenViewControllerProtocol: AnyObject {
 
 // MARK: - Add Transaction Screen Presenter Protocol
 protocol AddTransactionScreenPresenterProtocol {
+    var onSaveTapped: ((Transaction) -> Void)? { get set }
+    
     func loadView(controller: AddTransactionScreenViewControllerProtocol)
     func viewDidLoad()
     func saveTransactionTapped(_ transaction: Transaction)

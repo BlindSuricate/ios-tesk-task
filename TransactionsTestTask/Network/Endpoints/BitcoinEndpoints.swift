@@ -15,31 +15,31 @@ enum BitcoinAPI {
 // MARK: - Bitcoin API Endpoint Implementation
 extension BitcoinAPI: APIEndpoint {
     var baseURL: String {
-        return "https://blockchain.info"
+        "https://blockchain.info"
     }
     
     var path: String {
         switch self {
         case .ticker:
-            return "/ticker"
+            "/ticker"
         }
     }
     
     var method: HTTPMethod {
         switch self {
         case .ticker:
-            return .GET
+            .GET
         }
     }
     
     var headers: [String: String]? {
-        return [
+        [
             "Content-Type": "application/json",
             "Accept": "application/json"
         ]
     }
     
     var parameters: [String: Any]? {
-        return nil
+        nil
     }
 }

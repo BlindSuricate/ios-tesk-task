@@ -14,7 +14,15 @@ final class MainViewController: UIViewController {
         static let cellHeight: CGFloat = 100
         static let headerHeight: CGFloat = 40
         static let paginationTriggerOffset: Int = 3
+        
+        static let topUpAlertTitle = "Top Up Balance"
+        static let topUpAlertMessage = "Enter the amount of bitcoins to add to your balance"
+        static let topUpTextFieldPlaceholder = "Amount (BTC)"
+        static let addButtonTitle = "Add"
+        static let cancelButtonTitle = "Cancel"
+        static let maxDecimalPlaces = 5
     }
+    
     
     private let presenter: MainScreenPresenterProtocol
     private var transactionSections: [TransactionSection] = []
@@ -42,7 +50,7 @@ final class MainViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.transactionSections = presenter.getTransactionSections()
+        transactionSections = presenter.getTransactionSections()
         contentView?.transactionsTableView.dataSource = self
         contentView?.transactionsTableView.delegate = self
         
@@ -121,7 +129,7 @@ extension MainViewController: UITableViewDelegate {
 extension MainViewController: MainScreenViewControllerProtocol {
     
     func updateTransactionSections(_ sections: [TransactionSection]) {
-        self.transactionSections = sections
+        transactionSections = sections
         contentView?.updateTransactionSections(sections)
     }
     
@@ -159,6 +167,50 @@ extension MainViewController: MainScreenViewControllerProtocol {
     
     func hidePaginationLoading() {
         contentView?.hidePaginationLoading()
+    }
+    
+    func showTopUpBalanceAlert() {
+        let alert = UIAlertController(title: Constants.topUpAlertTitle, message: Constants.topUpAlertMessage, preferredStyle: .alert)
+        
+        alert.addTextField { textField in
+            textField.placeholder = Constants.topUpTextFieldPlaceholder
+            textField.keyboardType = .decimalPad
+        }
+        
+        let addAction = UIAlertAction(title: Constants.addButtonTitle, style: .default) { [weak self] _ in
+            guard let textField = alert.textFields?.first,
+                  let text = textField.text,
+                  !text.isEmpty else {
+                return
+            }
+
+            let normalizedText = text.replacingOccurrences(of: ",", with: ".")
+            
+            guard let amount = Double(normalizedText),
+                  amount > 0 else {
+                return
+            }
+            
+            self?.presenter.getModel().topUpBalance(amount: amount)
+            
+            let topUpTransaction = Transaction(
+                id: UUID(),
+                category: .enrollment,
+                amount: amount,
+                date: Date()
+            )
+            
+            self?.presenter.getModel().addTransaction(topUpTransaction)
+            self?.presenter.loadCurrentBalance()
+            self?.presenter.updateView()
+        }
+        
+        let cancelAction = UIAlertAction(title: Constants.cancelButtonTitle, style: .cancel)
+        
+        alert.addAction(addAction)
+        alert.addAction(cancelAction)
+        
+        present(alert, animated: true)
     }
     
     // MARK: - Helper Methods
